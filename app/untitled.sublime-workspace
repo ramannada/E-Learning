@@ -1,0 +1,1378 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Gr",
+				"GroupMemberRepository"
+			],
+			[
+				"chec",
+				"checkOrCreate\t(BaseModel.php)"
+			],
+			[
+				"gr",
+				"groups\t(20170427095640_create_group_table.php)"
+			],
+			[
+				"add",
+				"addForeignKey"
+			],
+			[
+				"fin",
+				"findToken"
+			],
+			[
+				"Adm",
+				"AdminMiddleware\t(AdminMiddleware.php)"
+			],
+			[
+				"A",
+				"App\\Controllers\\API\\UserController:logout"
+			],
+			[
+				"g",
+				"group"
+			],
+			[
+				"User",
+				"UserRepository"
+			],
+			[
+				"f",
+				"function"
+			],
+			[
+				"Use",
+				"UserTokenRepository\t(UserController.php)"
+			],
+			[
+				"Re",
+				"Repositories\t(UserController.php)"
+			],
+			[
+				"lo",
+				"logout\t(UserController.php)"
+			],
+			[
+				"res",
+				"responseDetail"
+			],
+			[
+				"tok",
+				"tokenRepo"
+			],
+			[
+				"Token",
+				"UserTokenRepository"
+			],
+			[
+				"c",
+				"column"
+			],
+			[
+				"ce",
+				"create"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"col",
+				"columns"
+			],
+			[
+				"cch",
+				"check"
+			],
+			[
+				"fet",
+				"fetch"
+			],
+			[
+				"m",
+				"meta"
+			],
+			[
+				"is",
+				"is_int\t(UserController.php)"
+			],
+			[
+				"set",
+				"setToken"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"find",
+				"findBy"
+			],
+			[
+				"toe",
+				"tokenRepo"
+			],
+			[
+				"co",
+				"column"
+			],
+			[
+				"UserTok",
+				"UserTokenRepository\t(UserTokenRepository.php)"
+			],
+			[
+				"pass",
+				"password_hash\t(UserRepository.php)"
+			],
+			[
+				"p",
+				"phone"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"fu",
+				"function\t(UserController.php)"
+			],
+			[
+				"HTTP",
+				"HTTP_USER_AGENT\t(Browser.php)"
+			],
+			[
+				"B",
+				"Browser\t(Browser.php)"
+			],
+			[
+				"Ex",
+				"Extensions\t(containers.php)"
+			],
+			[
+				"def",
+				"defaultColumn"
+			],
+			[
+				"ini",
+				"initialize"
+			],
+			[
+				"ta",
+				"table\t(User.php)"
+			],
+			[
+				"pro",
+				"protected\t(Logger.php)"
+			],
+			[
+				"Ab",
+				"AbstractProcessingHandler"
+			],
+			[
+				"Contr",
+				"Controllers\t(UserController.php)"
+			],
+			[
+				"name",
+				"namespace\t(UserRepository.php)"
+			],
+			[
+				"strto",
+				"strtolower"
+			],
+			[
+				"me",
+				"message"
+			],
+			[
+				"resp",
+				"response"
+			],
+			[
+				"re",
+				"register"
+			],
+			[
+				"usr",
+				"users\t(User.php)"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"v",
+				"value"
+			],
+			[
+				"ch",
+				"check\t(BaseModel.php)"
+			],
+			[
+				"crae",
+				"create_at\t(20170423071930_create_table_users.php)"
+			],
+			[
+				"use",
+				"users"
+			],
+			[
+				"Bas",
+				"BaseController\t(BaseController.php)"
+			],
+			[
+				"Co",
+				"Controllers\t(BaseController.php)"
+			],
+			[
+				"value",
+				"valueParam"
+			],
+			[
+				"whereB",
+				"whereByArray\t(BaseModel.php)"
+			],
+			[
+				"val",
+				"valueParam"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"cre",
+				"create"
+			],
+			[
+				"de",
+				"deleted\t(BaseModel.php)"
+			],
+			[
+				"exp",
+				"explode\t(Builder.php)"
+			],
+			[
+				"se",
+				"select"
+			],
+			[
+				"wh",
+				"where"
+			],
+			[
+				"and",
+				"andWhere"
+			],
+			[
+				"fo",
+				"foreach\tforeach …"
+			],
+			[
+				"e",
+				"echo\techo \"…\""
+			],
+			[
+				"check",
+				"check"
+			],
+			[
+				"che",
+				"checkAndCreate\t(BaseModel.php)"
+			],
+			[
+				"param",
+				"paramData"
+			],
+			[
+				"total",
+				"total_page"
+			],
+			[
+				"to",
+				"total_data"
+			],
+			[
+				"ex",
+				"execute"
+			],
+			[
+				"else",
+				"elseif\telseif …"
+			],
+			[
+				"reu",
+				"return\t(HotelController.php)"
+			],
+			[
+				"iS",
+				"iStoreIt"
+			],
+			[
+				"token",
+				"token"
+			],
+			[
+				"fea",
+				"featureContext"
+			],
+			[
+				"CO",
+				"Context"
+			],
+			[
+				"head",
+				"headers"
+			],
+			[
+				"arg",
+				"arg1"
+			],
+			[
+				"js",
+				"json_decode($test\t(UserController.php)"
+			],
+			[
+				"json",
+				"json_decode($test\t(UserController.php)"
+			],
+			[
+				"app",
+				"application"
+			],
+			[
+				"_re",
+				"_response"
+			],
+			[
+				"cl",
+				"client"
+			],
+			[
+				"Cone",
+				"Content-type\t(AuthToken.php)"
+			],
+			[
+				"get",
+				"getHotel"
+			],
+			[
+				"wi",
+				"withJson\t(AuthToken.php)"
+			],
+			[
+				"Fea",
+				"FeatureContext"
+			],
+			[
+				"session_",
+				"session_start"
+			],
+			[
+				"sear",
+				"searchByDate\t(HotelController.php)"
+			],
+			[
+				"H",
+				"HotelController\t(HotelController.php)"
+			],
+			[
+				"C",
+				"Controllers\t(HotelController.php)"
+			],
+			[
+				"Us",
+				"UserToken"
+			],
+			[
+				"Err",
+				"Error"
+			],
+			[
+				"toa",
+				"totalPage"
+			],
+			[
+				"cu",
+				"currentPage"
+			],
+			[
+				"null",
+				"null"
+			],
+			[
+				"array_p",
+				"array_pop"
+			],
+			[
+				"Admi",
+				"AdminMiddleware\t(routes.php)"
+			],
+			[
+				"con",
+				"container"
+			],
+			[
+				"Aut",
+				"AuthToken\t(AuthToken.php)"
+			],
+			[
+				"wit",
+				"withHeader('Content-type\t(BaseController.php)"
+			],
+			[
+				"getP",
+				"getParam\t(UserController.php)"
+			],
+			[
+				"ho",
+				"hotels"
+			],
+			[
+				"Ho",
+				"Hotels"
+			],
+			[
+				"av",
+				"available_at\t(20170411063049_create_hotel_table.php)"
+			],
+			[
+				"hol",
+				"hotels\t(20170411063049_create_hotel_table.php)"
+			],
+			[
+				"ava",
+				"available_at"
+			],
+			[
+				"aba",
+				"available"
+			],
+			[
+				"password",
+				"password_hash\t(Users.php)"
+			],
+			[
+				"err",
+				"error"
+			],
+			[
+				"App",
+				"App\\Controllers\\UserController:findUser"
+			],
+			[
+				"time",
+				"timestamp"
+			],
+			[
+				"with",
+				"withJson"
+			],
+			[
+				"apl",
+				"application"
+			],
+			[
+				"create",
+				"createQueryBuilder"
+			],
+			[
+				"crea",
+				"createQueryBuilder"
+			],
+			[
+				"Con",
+				"Content-type"
+			],
+			[
+				"af",
+				"afterUpdate"
+			],
+			[
+				"be",
+				"beforeUpdate"
+			],
+			[
+				"stat",
+				"status"
+			],
+			[
+				"mysq",
+				"mysqli_connect"
+			],
+			[
+				"Au",
+				"AuthToken\t(AuthToken.php)"
+			],
+			[
+				"He",
+				"Hello\t(web.php)"
+			],
+			[
+				"na",
+				"name"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "bootstrap.php",
+			"settings":
+			{
+				"buffer_size": 224,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "containers.php",
+			"settings":
+			{
+				"buffer_size": 941,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "settings.php",
+			"settings":
+			{
+				"buffer_size": 556,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes.php",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 218.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"al",
+				"Preferences: Alignment File Settings – Default"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"css",
+				"Emmet: Reflect CSS Value"
+			],
+			[
+				"php",
+				"PHP Code Sniffer: Switch coding standard"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/var/www/html/testdev/E-Learning",
+		"/var/www/html/testdev/E-Learning/app",
+		"/var/www/html/testdev/E-Learning/public",
+		"/var/www/html/testdev/E-Learning/src",
+		"/var/www/html/testdev/E-Learning/src/Controllers"
+	],
+	"file_history":
+	[
+		"/var/www/html/testdev/E-Learning/app/settings.php.example",
+		"/var/www/html/testdev/Reporting-App/src/Repositories/GroupRepository.php",
+		"/var/www/html/testdev/Reporting-App/src/Controllers/BaseController.php",
+		"/var/www/html/testdev/Reporting-App/app/routes.php",
+		"/var/www/html/testdev/Reporting-App/composer.json",
+		"/var/www/html/testdev/Reporting-App/src/Repositories/UserTokenRepository.php",
+		"/var/www/html/testdev/Reporting-App/database/migrations/20170427095640_create_group_table.php",
+		"/var/www/html/testdev/Reporting-App/database/migrations/20170427102049_create_group_member_table.php",
+		"/var/www/html/testdev/Reporting-App/src/Controllers/API/GroupController.php",
+		"/var/www/html/testdev/Reporting-App/src/Middlewares/BaseMiddleware.php",
+		"/var/www/html/testdev/Reporting-App/src/Middlewares/API/AuthToken.php",
+		"/var/www/html/testdev/Reporting-App/src/Middlewares/API/AdminMiddleware.php",
+		"/var/www/html/testdev/Reporting-App/src/Controllers/UserController.php",
+		"/var/www/html/testdev/Reporting-App/src/Models/Users/UserToken.php",
+		"/var/www/html/testdev/Reporting-App/src/Repositories/UserRepository.php",
+		"/var/www/html/testdev/Reporting-App/src/Repositories/Contracts/RepositoriesInterface.php",
+		"/var/www/html/testdev/Reporting-App/database/migrations/20170426142149_create_user_token_table.php",
+		"/var/www/html/testdev/Reporting-App/src/Models/BaseModel.php",
+		"/var/www/html/testdev/Reporting-App/database/migrations/20170426135836_create_users_table.php",
+		"/var/www/html/testdev/Reporting-App/database/seeds/AdminSeeder.php",
+		"/var/www/html/testdev/Reporting-App/app/settings.php",
+		"/var/www/html/testdev/Reporting-App/phinx.yml",
+		"/var/www/html/testdev/MITReport/logs/app.log",
+		"/var/www/html/testdev/MITReport/src/Repositories/Contracts/RepositoriesInterface.php",
+		"/var/www/html/testdev/MITReport/app/settings.php",
+		"/var/www/html/testdev/MITReport/src/Models/BaseModel.php",
+		"/var/www/html/testdev/MITReport/database/migrations/20170423071930_create_table_users.php",
+		"/var/www/html/testdev/MITReport/src/Models/Users/User.php",
+		"/var/www/html/testdev/MITReport/phinx.yml",
+		"/var/www/html/testdev/Slim-API-Skeleton/phinx.yml.example",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/database/Query/Grammars/Grammar.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/database/Query/Builder.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/database/Eloquent/Builder.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/database/Eloquent/Model.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/contracts/Pagination/Paginator.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/contracts/Pagination/LengthAwarePaginator.php",
+		"/var/www/html/belajarphp/belajardbal/vendor/illuminate/database/Eloquent/Collection.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Controllers/UserController.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Controllers/HotelController.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Models/Users/UserToken.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/hotelIndex.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/deleteHotel.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/guzzlehttp/guzzle/src/Client.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Models/Hotels/Hotels.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Models/BaseModel.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/app/routes.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/bootstrap/TokenContext.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Middlewares/AuthToken.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/updateHotel.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/register.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/bootstrap/FeatureContext.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/logout.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/searchHotel.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/behat.yml",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/login.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/guzzlehttp/guzzle/src/ClientInterface.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/addHotel.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/test2.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/test.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/bootstrap/RegisterContext.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/guzzlehttp/psr7/src/Request.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/behat/behat/src/Behat/Behat/Hook/Scope/BeforeScenarioScope.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Models/Users/Users.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/fabpot/goutte/Goutte/Client.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/vendor/guzzlehttp/psr7/src/Response.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Controllers/BaseController.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/composer.json",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/features/hello.feature",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/app/settings.php.example",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/phinx.yml.example",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/db/migrations/20170410175047_create_table_users.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Middlewares/AdminMiddleware.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/phinx.yml",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/db/migrations/20170411063049_create_hotel_table.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Middlewares/BaseMiddleware.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/app/settings.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/db/migrations/20170411062516_insert_admin_data.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/db/migrations/20170410175054_create_table_user_token.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/src/Models/Users.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/Hotelhotel/.gitignore",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/phinx.yml",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/composer.json",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/db/migrations/20170407075015_create_user_table.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/app/routes.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/db/seeds/UserSeeder.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/app/settings.php.example",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/phinx.yml.example",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/src/Models/Users.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/src/Controllers/BaseController.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/public/index.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/src/Models/BaseModel.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/public/.htaccess",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/app/settings.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/app/container.php",
+		"/home/chongieball/docker-container/slim-project-with-docker/RESTful-API/app/bootstrap.php",
+		"/home/chongieball/docker-container/slim-php/index.php",
+		"/home/chongieball/docker-container/slim-php/test/index.php",
+		"/home/chongieball/docker-container/php7.0-apache/docker-compose.yml",
+		"/home/chongieball/docker-container/docker-compose.yml",
+		"/home/chongieball/docker-container/php7.0-apache/Dockerfile",
+		"/home/chongieball/docker-container/Dockerfile",
+		"/var/www/html/belajarphp/RESTful-API-With-Slim/src/Controllers/BaseController.php",
+		"/var/www/html/belajarphp/RESTful-API-With-Slim/public/.htaccess",
+		"/var/www/html/belajarphp/RESTful-API-With-Slim/public/index.php",
+		"/var/www/html/testdev/MITBookStore/views/back-end/author/update.twig",
+		"/var/www/html/testdev/MITBookStore/views/back-end/category/update.twig",
+		"/var/www/html/testdev/MITBookStore/src/Basket/Basket.php",
+		"/var/www/html/testdev/MITBookStore/views/front-end/home.twig",
+		"/var/www/html/testdev/MITBookStore/src/Models/BaseModel.php",
+		"/var/www/html/testdev/MITBookStore/src/Models/Invoice.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/InvoiceController.php",
+		"/var/www/html/testdev/MITBookStore/views/front-end/order/index.twig",
+		"/var/www/html/testdev/MITBookStore/views/front-end/partials/navuser.twig",
+		"/var/www/html/testdev/MITBookStore/app/route.php",
+		"/var/www/html/testdev/MITBookStore/src/Models/Order.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/BookController.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/HomeController.php",
+		"/var/www/html/testdev/MITBookStore/views/front-end/book/search.twig",
+		"/var/www/html/testdev/MITBookStore/database/migrations/20170328172333_create_table_invoice.php",
+		"/var/www/html/testdev/MITBookStore/src/Models/Book.php",
+		"/var/www/html/testdev/MITBookStore/src/Models/Author.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/UserController.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/OrderController.php",
+		"/var/www/html/testdev/MITBookStore/.gitignore",
+		"/var/www/html/testdev/MITBookStore/views/back-end/app.twig",
+		"/var/www/html/testdev/MITBookStore/views/back-end/book/detail.twig",
+		"/var/www/html/testdev/MITBookStore/src/Models/OrderItem.php",
+		"/var/www/html/testdev/MITBookStore/src/Controllers/AuthorController.php"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 164.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"'*'",
+			"browscap.ini",
+			"where(",
+			"where",
+			"update",
+			"crossJoin",
+			"firstOrC",
+			"withT",
+			"soft",
+			"paginate",
+			"get()",
+			"get",
+			"select",
+			"paginat",
+			"RequestOptions::JSON",
+			"post",
+			"8080",
+			"\t\t\t\n",
+			"find",
+			"item",
+			"table",
+			"/>\n",
+			"db",
+			"add",
+			"findCategory",
+			"table",
+			"b",
+			"book",
+			"author",
+			"softDelete",
+			"book",
+			"find",
+			"ali",
+			"align",
+			"form",
+			"user",
+			"book",
+			"data",
+			"_SESSION",
+			"col-sm-5",
+			"btn-sm",
+			"btn",
+			"btn-sm",
+			"btn",
+			"btn-sm",
+			"col-sm-5",
+			"col-md-2",
+			"getQueryParam",
+			".modal-danger",
+			".modal modal-danger",
+			">\n",
+			"AdminLTE cus",
+			"Tab",
+			"Tab 1",
+			"AdminLTE Custom",
+			"Custom Tabs",
+			"tab",
+			"collapse",
+			"select",
+			"Select2",
+			"warning",
+			"\t\t\t$",
+			"$('#save').click(function(){\n    \t\t\tvar subject = [];\n\n    \t\t\t$('.subject').each(function(){\n    \t\t\t\tsubject.push($(this).text());\n    \t\t\t});\n    \t\t\t$.ajax({\n    \t\t\t\turl:\"index.php\"\n    \t\t\t\tmethod:\"POST\"\n    \t\t\t\tdata:{subject:subject},\n    \t\t\t\tsuccess:function(data)\n    \t\t\t\t{\n    \t\t\t\t\t$(\"td[contenteditable='true']\").text(\"\");\n    \t\t\t\t\tfor(var i = 2; i <= count i++)\n    \t\t\t\t\t{\n    \t\t\t\t\t\t$('tr#'+i+'').remove();\n    \t\t\t\t\t}\n    \t\t\t\t}\n    \t\t\t})\n    \t\t});",
+			"condensed full",
+			"condensedfull",
+			"considered full",
+			"cons full",
+			"name",
+			"book",
+			"\tpublic function __get($property)\n\t{\n\t\tif ($this->container->{property}) {\n\t\t\treturn $this->container;\n\t\t}\n\t}",
+			"asset",
+			", ['null' => false]",
+			"unique",
+			"back",
+			"create",
+			"rack",
+			"// Set DSN\n        // $dsn = 'mysql:host=chongieball;dbname=kraken_apotek';//.\",root\".\",poikoiloi@\";\n        // // Set options\n        // // $options = array(\n        // //     PDO::ATTR_PERSISTENT    => true,\n        // //     PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION\n        // // );\n        // // Create a new PDO instanace\n        // try{\n        //     $this->dbh = parent::__construct($dsn, \"root\", \"poikoiloi@\");\n        // }\n        // // Catch any errors\n        // catch(PDOException $e){\n        //     $this->error = $e->getMessage();\n        // }",
+			"}\n",
+			"hitung"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "bootstrap.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 224,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								224,
+								224
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Twig/Syntaxes/HTML (Twig).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "containers.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 941,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5,
+								5
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+									"1":
+									[
+										116,
+										117
+									]
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Twig/Syntaxes/HTML (Twig).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "settings.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 556,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								556,
+								556
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/Twig/Syntaxes/HTML (Twig).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 67.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "untitled.sublime-project",
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/project/RESTful-API-docker.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 287.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
