@@ -18,10 +18,7 @@ class Mailer
 	{
 		$message = new Message($this->mailer);
 
-
-		$this->view->appendData($data);
-
-		$message->body($this->view->render($template));
+		$message->body($this->view->fetch($template));
 
 		call_user_func($callback, $message);
 
