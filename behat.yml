@@ -4,10 +4,11 @@ default:
             contexts:
                 - FeatureContext:
                     parameters:
-                        base_url: http://127.0.0.1/public/E-Learning/
+                        base_url: http://localhost:8080/public/
+                - TokenContext
     extensions:
         Behat\MinkExtension:
-            base_url: http://127.0.0.1/public/E-Learning/
+            base_url: http://localhost:8080/public/
             sessions:
                 goutte:
                     goutte: ~
