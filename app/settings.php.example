@@ -16,7 +16,7 @@ return [
 
 	//setting db (with doctrine)
 	'db'	=> [
-		'url'	=> 'mysql://root:root@127.0.0.1/elearning',
+		'url'	=> 'mysql://root:root@db/elearning',
 	],
 
 	'determineRouteBeforeAppMiddleware' => true,
