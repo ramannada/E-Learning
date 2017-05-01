@@ -3,6 +3,9 @@
 use Slim\Container;
 use Slim\Views\Twig as View;
 use Slim\Views\TwigExtension as ViewExt;
+use RandomLib\Factory as Random;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 $container = $app->getContainer();
 
@@ -21,7 +24,7 @@ $container['validator'] = function (Container $container) {
 	$setting = $container->get('settings')['lang']['default'];
 	$params = $container['request']->getParams();
 
-	return new Valitron\Validator($params, [], $setting);
+	return new \Valitron\Validator($params, [], $setting);
 };
 
 $container['view'] = function (Container $container) {
@@ -32,6 +35,8 @@ $container['view'] = function (Container $container) {
 
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
+	$view->getEnvironment()->addGlobal('baseUrl', 'http://localhost:8080');
+
 	return $view;
 };
 
@@ -41,4 +46,29 @@ $container['flash'] = function (Container $container) {
 
 $container['csrf'] = function (Container $container) {
 	return new \Slim\Csrf\Guard;
+};
+
+$container['mailer'] = function (Container $container) {
+	$setting = $container->get('settings')['mailer'];
+
+	$mailer = new PHPMailer;
+	$mailer->Host = $setting['host'];
+	$mailer->SMTPAuth = $setting['smtp_auth'];
+	$mailer->SMTPSecure = $setting['smtp_secure'];
+	$mailer->Port = $setting['port'];
+	$mailer->Username = $setting['username'];
+	$mailer->Password = $setting['password'];
+
+	$mailer->isMailer($setting['html']);
+
+	return new \App\Extensions\Mailers\Mailer($container['view'], $mailer);
+};
+
+$container['random'] = function (Container $container) {
+	$random = new Random;
+	return $random->getMediumStrengthGenerator();
+}
+
+$container['testing'] = function (Container $container) {
+	return new Client(['base_uri' => 'http://localhost:8080/public/']);
 };
