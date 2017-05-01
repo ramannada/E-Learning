@@ -6,9 +6,10 @@ default:
                     parameters:
                         base_url: http://localhost:8080/public/
                 - TokenContext
+
     extensions:
         Behat\MinkExtension:
-            base_url: http://localhost:8080/public/
+            base_url: http://php/public/
             sessions:
                 goutte:
                     goutte: ~

@@ -59,6 +59,7 @@ $container['mailer'] = function (Container $container) {
 	$mailer->SMTPAuth = true;
 	$mailer->Username = $setting['username'];
 	$mailer->Password = $setting['password'];
+
 	$mailer->setFrom($setting['username'], $setting['name']);
 
 	return new \App\Extensions\Mailers\Mailer($container['view'], $mailer);
