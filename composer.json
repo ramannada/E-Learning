@@ -13,8 +13,8 @@
         "behat/mink-goutte-driver": "^1.2",
         "slim/twig-view": "^2.2",
         "slim/csrf": "^0.8.1",
-        "slim/flash": "^0.2.0"
-        
+        "slim/flash": "^0.2.0",
+        "guzzlehttp/guzzle": "~6.0"
     },
 
     "autoload":{
