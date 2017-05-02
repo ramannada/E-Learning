@@ -43,7 +43,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-    
+
         $this->tokenContext = $environment->getContext('TokenContext');
     }
 
@@ -167,6 +167,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'headers'   => $headers,
             'query'     => $query,
         ];
+
+        $options = [
+            'query' => [
+                'token' => $request->getQueryParam('token'),
+            ]
+        ]
 
         $this->_response = $this->_client->request('GET', $url, $options);
     }

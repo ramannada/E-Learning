@@ -10,7 +10,7 @@ class UserController extends \App\Controllers\BaseController
     public function register(Request $request, Response $response)
     {
         $user = new \App\Models\Users\User;
-        
+
         $rule = [
             'required' => [
                 ['name'],
@@ -31,14 +31,14 @@ class UserController extends \App\Controllers\BaseController
 
         if ($this->validator->validate()) {
             $addUser = $user->register($request->getParsedBody());
-            
+
             if (is_int($addUser)) {
                 $find = $user->find('id', $addUser)->fetch();
 
                 $role = new \App\Models\Users\UserRole;
                 $role->createRole($find['id']);
 
-                $this->mailer->send('email/register.twig', ['user' => $find], function($message) use ($find) {
+                $this->mailer->send('templates/mailer/register.twig', ['user' => $find], function($message) use ($find) {
                         $message->to($find['email']);
                         $message->subject('Active Your Account');
                 });
@@ -58,7 +58,7 @@ class UserController extends \App\Controllers\BaseController
         $user = new \App\Models\Users\User;
 
         $token = $request->getQueryParam('token');
-        
+
         $findUser = $user->find('active_token', $token)->fetch();
 
         if ($findUser && $findUser['is_active'] == 0) {
