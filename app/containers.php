@@ -51,15 +51,16 @@ $container['csrf'] = function (Container $container) {
 $container['mailer'] = function (Container $container) {
 	$setting = $container->get('settings')['mailer'];
 
-	$mailer = new PHPMailer;
+	$mailer = new \PHPMailer;
+	$mailer->isSMTP();
 	$mailer->Host = $setting['host'];
-	$mailer->SMTPAuth = $setting['smtp_auth'];
-	$mailer->SMTPSecure = $setting['smtp_secure'];
 	$mailer->Port = $setting['port'];
+	$mailer->SMTPSecure = 'tls';
+	$mailer->SMTPAuth = true;
 	$mailer->Username = $setting['username'];
 	$mailer->Password = $setting['password'];
 
-	$mailer->isMailer($setting['html']);
+	$mailer->setFrom($setting['username'], $setting['name']);
 
 	return new \App\Extensions\Mailers\Mailer($container['view'], $mailer);
 };
@@ -67,8 +68,8 @@ $container['mailer'] = function (Container $container) {
 $container['random'] = function (Container $container) {
 	$random = new Random;
 	return $random->getMediumStrengthGenerator();
-}
+};
 
 $container['testing'] = function (Container $container) {
-	return new Client(['base_uri' => 'http://localhost:8080/public/']);
+	return new Client(['base_uri' => 'http://172.17.0.1:8080/public/', 'headers' => ['Content-type' => 'application/json']]);
 };
