@@ -13,13 +13,15 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Doctrine\DBAL\Driver\PDOMySql\Driver;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext extends MinkContext implements Context, SnippetAcceptingContext
 {
-
     private $_client;
     private $_parameters = [];
     private $_request;
@@ -131,14 +133,18 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iStoreIt()
     {
-        $headers = [
-            'Content-Type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
-        ];
-        $body = json_encode($this->_body);
+        try {
+            $headers = [
+                'Content-Type'  => 'application/json',
+                'Authorization' => $this->tokenContext->token,
+            ];
+            $body = json_encode($this->_body);
 
-        $this->_response = $this->_client
-                                ->request($this->_request['method'], $this->_request['url'], ['headers' => $headers, 'json' => $this->_body]);
+            $this->_response = $this->_client
+                                    ->request($this->_request['method'], $this->_request['url'], ['headers' => $headers, 'json' => $this->_body]);
+        } catch (Exception $exception) {
+            $this->getException($exception);
+        }
     }
 
     /**
@@ -175,5 +181,57 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         ]
 
         $this->_response = $this->_client->request('GET', $url, $options);
+    }
+
+    /**
+     * @seting database connect
+     */
+    public function dbConnect()
+    {
+        $file = json_decode(file_get_contents("config.json", 'r'), true);
+
+        $username = $file['user'];
+        $password = $file['pass'];
+        $hostname = 'mysql:host=' . $file['host'] ;
+        $database = 'dbname=' . $file['db'];
+        $port     = 'port=' . $file['port'];
+
+        $dbh = new PDO($hostname.';'.$database.';'.$port, $username, $password);
+
+        return $dbh;
+    }
+
+    /**
+     * @getException Error
+     */
+    public function getException($exception)
+    {
+        $getResponse = $exception->getResponse();
+
+        $data =  json_decode($getResponse->getBody()->getContents());
+ 
+        if (!($data->status == 200)) {
+            if (!empty($data->data)) {
+                throw new Exception($data->data);
+            } else {
+                throw new Exception($data->message);
+            }
+        }
+    }
+
+    /**
+     * @When I active user with email :email
+     */
+    public function iActiveUserWithEmail($email)
+    {
+        $this->dbConnect()->query("UPDATE users SET is_active = 1 where email = '$email'");
+    }
+
+     /**
+     * @When I delete user with email :email
+     */
+    public function iDeleteUserWithEmail($email)
+    {
+        $this->dbConnect()->query("DELETE FROM users where email = '$email'");
     }
 }

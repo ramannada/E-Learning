@@ -13,7 +13,6 @@ $app->group('', function() use ($app,$container) {
 	$app->get('/active', 'App\Controllers\Web\UserController:activeUser')->setName('web.user.active');
 	$app->get('/login', 'App\Controllers\Web\UserController:getLogin')->setName('web.user.login');
     $app->post('/login', 'App\Controllers\Web\UserController:postLogin')->setName('web.post.user.login');
-
 });
 
 ?>

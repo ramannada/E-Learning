@@ -4,12 +4,12 @@ default:
             contexts:
                 - FeatureContext:
                     parameters:
-                        base_url: http://chongieball:8080/public/
+                        base_url: http://php/public/
                 - TokenContext
 
     extensions:
         Behat\MinkExtension:
-            base_url: http://chongieball:8080/public/
+            base_url: http://php/public/
             sessions:
                 goutte:
                     goutte: ~
