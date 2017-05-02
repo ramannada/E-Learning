@@ -71,5 +71,5 @@ $container['random'] = function (Container $container) {
 };
 
 $container['testing'] = function (Container $container) {
-	return new Client(['base_uri' => 'http://localhost:8080/public/', 'headers' => ['Content-type' => 'application/json']]);
+	return new Client(['base_uri' => 'http://172.17.0.1:8080/public/', 'headers' => ['Content-type' => 'application/json']]);
 };
