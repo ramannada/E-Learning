@@ -1,9 +1,10 @@
 <?php
 
-$app->post('/api/register', 'App\Controllers\Api\UsersController:register');
+$app->group('/api', function() use ($app,$container) {
+	$app->post('/register', 'App\Controllers\Api\UserController:register');
+	$app->get('/active', 'App\Controllers\Api\UserController:activeUser')->setName('user.active');
+	$app->post('/login', 'App\Controllers\Api\UserController:login');
 
-$app->get('/active', 'App\Controllers\Api\UsersController:activeUser')->setName('user.active');
-
-$app->post('/api/login', 'App\Controllers\Api\UsersController:login');
+});
 
 ?>

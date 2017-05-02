@@ -27,9 +27,9 @@ class CreateTableUserRole extends AbstractMigration
      */
     public function change()
     {
-        $data = $this->table('user_role', ['id' => false]);
+        $data = $this->table('user_role');
         $data->addColumn('user_id', 'integer')
-             ->addColumn('role_id', 'integer')
+             ->addColumn('role_id', 'integer', ['default' => 3])
              ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
              ->addForeignKey('role_id', 'role', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
              ->create();

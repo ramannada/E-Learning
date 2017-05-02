@@ -2,7 +2,7 @@
 
 namespace App\Models\Users;
 
-class Users extends \App\Models\BaseModel
+class User extends \App\Models\BaseModel
 {
     protected $table = 'users';
     protected $column = ['id', 'name', 'username', 'email', 'password', 'phone', 'active_token', 'is_active'];

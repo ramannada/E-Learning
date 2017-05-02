@@ -5,11 +5,11 @@ namespace App\Controllers\Api;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class UsersController extends \App\Controllers\BaseController
+class UserController extends \App\Controllers\BaseController
 {
     public function register(Request $request, Response $response)
     {
-        $user = new \App\Models\Users\Users($this->db);
+        $user = new \App\Models\Users\User;
         
         $rule = [
             'required' => [
@@ -21,15 +21,9 @@ class UsersController extends \App\Controllers\BaseController
             'email' => [
                 ['email'],
             ],
-            'numeric' => [
-                ['phone_number'],
-            ],
             'lengthMin' => [
                 ['username', 6],
                 ['password', 6],
-            ],
-            'lengthMax' => [
-                ['phone_number', 12],
             ],
         ];
 
@@ -40,6 +34,10 @@ class UsersController extends \App\Controllers\BaseController
             
             if (is_int($addUser)) {
                 $find = $user->find('id', $addUser)->fetch();
+
+                $role = new \App\Models\Users\UserRole;
+                $role->createRole($find['id']);
+
                 $this->mailer->send('email/register.twig', ['user' => $find], function($message) use ($find) {
                         $message->to($find['email']);
                         $message->subject('Active Your Account');
@@ -57,18 +55,20 @@ class UsersController extends \App\Controllers\BaseController
 
     public function activeUser(Request $request, Response $response)
     {
-        $user = new \App\Models\Users\Users($this->db);
+        $user = new \App\Models\Users\User;
 
         $token = $request->getQueryParam('token');
         
         $findUser = $user->find('active_token', $token)->fetch();
 
-        if ($findUser) {
+        if ($findUser && $findUser['is_active'] == 0) {
             $update = ['is_active' => 1,];
 
             $user->update($update, 'id', $findUser['id']);
 
             $data = $this->responseDetail("Verification Success", 200);
+        } elseif ($findUser && $findUser['is_active'] == 1) {
+            $data = $this->responseDetail("You account is verified", 400);
         } else {
             $data = $this->responseDetail("Data Not Found", 404);
         }
@@ -78,7 +78,7 @@ class UsersController extends \App\Controllers\BaseController
 
     public function login(Request $request, Response $response)
     {
-        $user = new \App\Models\Users\Users($this->db);
+        $user = new \App\Models\Users\User;
 
         $login = $user->find('username', $request->getParsedBody()['username'])->fetch();
 
@@ -88,12 +88,16 @@ class UsersController extends \App\Controllers\BaseController
             $check = password_verify($request->getParsedBody()['password'], $login['password']);
 
             if ($check) {
-                $token = new \App\Models\Users\UserToken($this->db);
+                $token = new \App\Models\Users\UserToken;
 
                 $getToken = $token->setToken($login['id']);
 
+                $role = new \App\Models\Users\UserRole;
+                $findRole = $role->find('user_id', $getToken['user_id'])->fetch();
+
                 $key = [
-                    'meta' => $getToken,
+                    'token' => $getToken,
+                    'role'  => $findRole['role_id'],
                 ];
 
                 $data = $this->responseDetail("Login Success", 200, $login, $key);
