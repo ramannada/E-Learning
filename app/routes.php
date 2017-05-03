@@ -4,7 +4,7 @@ $app->group('/api', function() use ($app,$container) {
 	$app->post('/register', 'App\Controllers\Api\UserController:register');
 	$app->get('/active', 'App\Controllers\Api\UserController:activeUser')->setName('user.active');
 	$app->post('/login', 'App\Controllers\Api\UserController:login');
-
+    $app->post('/password_reset', 'App\Controllers\Api\UserController:passwordReset');
 });
 
 $app->group('', function() use ($app,$container) {
@@ -13,6 +13,7 @@ $app->group('', function() use ($app,$container) {
 	$app->get('/active', 'App\Controllers\Web\UserController:activeUser')->setName('web.user.active');
 	$app->get('/login', 'App\Controllers\Web\UserController:getLogin')->setName('web.user.login');
     $app->post('/login', 'App\Controllers\Web\UserController:postLogin')->setName('web.post.user.login');
+    $app->get('/password_reset', 'App\Controllers\Web\UserController:passwordReset')->setName('web.user.password.reset');
 });
 
 ?>

@@ -17,5 +17,13 @@ Feature: User Register And Login
         And I fill "password" with "testbehat"
         Then I store it
 
+    Scenario: Reset Password
+        When I POST url "api/password_reset"
+        And I fill "email" with "testbehat@gmail.com"
+        Then I store it
+
+    Scenario: Delete Token Password Reset
+        When I delete token
+
     Scenario: Delete New User
         When I delete user with email "testbehat@gmail.com"

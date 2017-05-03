@@ -212,4 +212,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $this->dbConnect()->query("DELETE FROM users where email = '$email'");
     }
+
+    /**
+     * @When I delete token
+     */
+    public function iDeleteTokenPasswordReset()
+    {
+        $this->dbConnect()->query("DELETE FROM password_reset");
+    }
 }

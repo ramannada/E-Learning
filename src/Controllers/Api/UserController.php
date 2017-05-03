@@ -108,6 +108,44 @@ class UserController extends \App\Controllers\BaseController
 
         return $data;
     }
+
+    public function passwordReset(Request $request, Response $response)
+    {
+        $user = new \App\Models\Users\User;
+
+        $rule = [
+            'required' => [
+                ['email'],
+            ],
+            'email' => [
+                ['email'],
+            ],
+        ];
+
+        $this->validator->rules($rule);
+
+        if ($this->validator->validate()) {
+            $find = $user->find('email', $request->getParam('email'))->fetch();
+
+            if (!$find) {
+                $data = $this->responseDetail("Email not registered", 404);
+            } else {
+                $passwordReset = new \App\Models\Users\PasswordReset;
+                $passwordReset->setToken($find['id']);
+
+                $this->mailer->send('templates/mailer/password_reset.twig', ['user' => $find], function($message) use ($find) {
+                        $message->to($find['email']);
+                        $message->subject('Reset your password');
+                });
+
+                $data = $this->responseDetail("Check your email for reset password", 201);
+            }
+        } else {
+            $data = $this->responseDetail("Error", 400, $this->validator->errors());
+        }
+
+        return $data;
+    }
 }
 
 ?>
