@@ -272,5 +272,6 @@ abstract class BaseModel
             }
         }
         $this->update($data, $column, $value);
+        return $this->find($column, $value)->fetch();
     }
 }
