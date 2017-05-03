@@ -1,5 +1,4 @@
 <?php
-
 use Behat\Behat\Context\ClosuredContextInterface;
 use Behat\Behat\Context\TranslatedContextInterface;
 use Behat\Behat\Context\Context;
@@ -40,7 +39,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->_parameters = $parameters;
         $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
     }
-
      /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
@@ -48,7 +46,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     
         $this->tokenContext = $environment->getContext('TokenContext');
     }
-
     /**
      * @When I GET url :url
      */
@@ -58,10 +55,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'Content-type'  => 'application/json',
             'Authorization' => $this->tokenContext->token,
         ];
-
         $this->_response = $this->_client->request('GET', $url, ['headers' => $headers]);
     }
-
     /**
      * @When I GET url :url in page :page
      */
@@ -71,20 +66,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'Content-type'  => 'application/json',
             'Authorization' => $this->tokenContext->token,
         ];
-
         $query = [
             'page'  => $page,
         ];
-
         $options = [
             'headers'   => $headers,
             'query'     => $query,
         ];
-
         $this->_response = $this->_client->request('GET', $url, $options);
     }
-
-
     /**
      * @When I POST url :url
      */
@@ -95,7 +85,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'url'   => $url,
         ];
     }
-
     /**
      * @When I PUT url :url with id :id
      */
@@ -106,7 +95,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'url'   => $url.'/'.$id,
         ];
     }
-
     /**
      * @When I Delete url :url with id :id
      */
@@ -116,10 +104,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'Content-type'  => 'application/json',
             'Authorization' => $this->tokenContext->token,
         ];
-
         $this->_response = $this->_client->request('DELETE', $url.'/'.$id, ['headers' => $headers]);
     }
-
     /**
      * @When I fill :name with :value
      */
@@ -132,7 +118,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         }
         $this->_body[$name] = $value;
     }
-
     /**
      * @Then I store it
      */
@@ -151,7 +136,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             $this->getException($exception);
         }
     }
-
     /**
      * @Then I see the result
      */
@@ -159,7 +143,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         echo $this->_response->getBody();
     }
-
     /**
      * @When I GET url :url by :param with :value
      */
@@ -169,16 +152,13 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'Content-type'  => 'application/json',
             'Authorization' => $this->tokenContext->token,
         ];
-
         $query = [
             $param  => $value,
         ];
-
         $options = [
             'headers'   => $headers,
             'query'     => $query,
         ];
-
         $this->_response = $this->_client->request('GET', $url, $options);
     }
 
@@ -196,7 +176,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $port     = 'port=' . $file['port'];
 
         $dbh = new PDO($hostname.';'.$database.';'.$port, $username, $password);
-
         return $dbh;
     }
 
