@@ -259,4 +259,19 @@ abstract class BaseModel
         }
 
     }
+
+    public function checkOrUpdate(array $data, $column, $value)
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($this->check) && in_array($key, $this->check)) {
+                $check = $this->find($key, $value)->fetch();
+                if ($check)
+                {
+                    return ucfirst($key);
+                }
+            }
+        }
+        $this->update($data, $column, $value);
+        return $this->find($column, $value)->fetch();
+    }
 }
