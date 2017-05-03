@@ -108,6 +108,51 @@ class UserController extends \App\Controllers\BaseController
 
         return $data;
     }
+
+    public function editProfile(Request $request, Response $response, $args)
+    {
+        $post = $request->getParsedBody();
+
+        $rule = [
+            'required' => [
+                ['name'],
+                ['email'],
+            ],
+            'email' => [
+                ['email'],
+            ],
+        ];
+
+        $this->validator->rules($rule);
+
+        if ($this->validator->validate()) {
+            $user = new \App\Models\Users\User;
+            $findUser = $user->find('id', $args['id'])->fetch();
+
+            if ($findUser['email'] === $request->getParam('email')) {
+                unset($post['email']);
+            }
+
+            $update = $user->checkOrUpdate($post, 'id', $findUser['id']);
+
+            if (is_array($update)) {
+                $data = $this->responseDetail("Update Success", 200, $update);
+
+                if ($findUser['email'] != $request->getParam('email')) {
+                    $this->mailer->send('templates/mailer/update.twig', ['user' => $update], function($message) use ($findUser) {
+                        $message->to($findUser['email']);
+                        $message->subject('Profile Update');
+                    });
+                }
+            } else {
+                $data = $this->responseDetail($update . " already used", 400);
+            }
+        } else {
+            $data = $this->responseDetail("Error", 400, $this->validator->errors());
+        }
+
+        return $data;
+    }
 }
 
 ?>

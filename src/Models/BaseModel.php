@@ -138,7 +138,7 @@ abstract class BaseModel
            ->setParameters($paramData)
            ->execute();
 
-        return (int)$this->db->lastInsertId();
+        return (int) $this->db->lastInsertId();
     }
 
     /**
@@ -253,10 +253,25 @@ abstract class BaseModel
 
         if ($check) {
             $this->update($data, 'id', $check['id']);
-            return $this->find('id', $check['id'])->fetch();  
+            return $this->find('id', $check['id'])->fetch();
         } else {
             return $this->create($data);
         }
 
+    }
+
+    public function checkOrUpdate(array $data, $column, $value)
+    {
+        foreach ($data as $key => $values) {
+            if (is_array($this->check) && in_array($key, $this->check)) {
+                $check = $this->find($key, $values)->fetch();
+                if ($check)
+                {
+                    return ucfirst($key);
+                }
+            }
+        }
+        $this->update($data, $column, $value);
+        return $this->find($column, $value)->fetch();
     }
 }

@@ -2,6 +2,6 @@
     "host" : "db",
     "user" : "root",
     "pass" : "root",
-    "port" : "3366",
+    "port" : "3306",
     "db"   : "elearning"
 }
