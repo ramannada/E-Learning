@@ -125,6 +125,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
      */
     public function iFillWith($name, $value)
     {
+        if ($value == 'random_username') {
+            $value = md5(openssl_random_pseudo_bytes(12));
+        } elseif ($value == 'random_email') {
+            $value = md5(openssl_random_pseudo_bytes(12)). '@gmail.com';
+        }
         $this->_body[$name] = $value;
     }
 

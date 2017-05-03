@@ -38,7 +38,7 @@ class UserController extends \App\Controllers\BaseController
                 $role = new \App\Models\Users\UserRole;
                 $role->createRole($find['id']);
 
-                $this->mailer->send('template/mailer/register.twig', ['user' => $find], function($message) use ($find) {
+                $this->mailer->send('templates/mailer/register.twig', ['user' => $find], function($message) use ($find) {
                         $message->to($find['email']);
                         $message->subject('Active Your Account');
                 });
