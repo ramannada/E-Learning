@@ -57,7 +57,14 @@ abstract class BaseModel
         // $number = (int) $page;
         $range = $limit * ($page - 1);
 
-        $data = $this->query->setFirstResult($range)->setMaxResults($limit);
+        if (!$this->query) {
+            $qb = $this->getBuilder();
+            $this->query = $qb->select($this->column)
+                              ->from($this->table);
+        } else {
+            $this->query->setFirstResult($range)->setMaxResults($limit);
+        }
+        
         $data = $this->fetchAll();
 
         $result = [
