@@ -5,6 +5,8 @@ default:
                 - FeatureContext:
                     parameters:
                         base_url: http://php/public/
+                - TokenContext
+                
     extensions:
         Behat\MinkExtension:
             base_url: http://php/public/
