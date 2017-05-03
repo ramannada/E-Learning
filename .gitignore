@@ -6,3 +6,4 @@ public/assets/plugins/
 public/assets/dist/
 composer.lock
 mysql/
+features/bootstrap/config.json
