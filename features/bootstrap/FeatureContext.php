@@ -50,15 +50,21 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->paramContext = $environment->getContext('ParamContext');
     }
 
-    private function setDb()
+    public function setDb()
     {
-        global $container;
+        $setting['url'] = 'mysql://root:root@db/elearning'; 
+        
+        $config = new \Doctrine\DBAL\Configuration();
 
-        $this->db = $container['db'];
+        $connect = \Doctrine\DBAL\DriverManager::getConnection($setting,
+        $config);
+
+        $this->db = $connect;
     }
 
-    private function getBuilder()
+    public function getBuilder()
     {
+        $this->setDb();
         return $this->db->createQueryBuilder();
     }
 

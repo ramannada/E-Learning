@@ -16,14 +16,14 @@ abstract class BaseModel
 		$this->query = null;
 	}
 
-	private function setDb()
+	public function setDb()
 	{
 		global $container;
 
 		$this->db = $container['db'];
 	}
 
-	private function getBuilder()
+	public function getBuilder()
 	{
 		if ($this->db == null) {
 			$this->setDb();
