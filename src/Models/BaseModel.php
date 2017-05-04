@@ -16,14 +16,14 @@ abstract class BaseModel
 		$this->query = null;
 	}
 
-	private function setDb()
+	protected function setDb()
 	{
 		global $container;
 
 		$this->db = $container['db'];
 	}
 
-	private function getBuilder()
+	protected function getBuilder()
 	{
 		if ($this->db == null) {
 			$this->setDb();
@@ -57,7 +57,14 @@ abstract class BaseModel
         // $number = (int) $page;
         $range = $limit * ($page - 1);
 
-        $data = $this->query->setFirstResult($range)->setMaxResults($limit);
+        if (!$this->query) {
+            $qb = $this->getBuilder();
+            $this->query = $qb->select($this->column)
+                              ->from($this->table);
+        } else {
+            $this->query->setFirstResult($range)->setMaxResults($limit);
+        }
+        
         $data = $this->fetchAll();
 
         $result = [
@@ -262,9 +269,9 @@ abstract class BaseModel
 
     public function checkOrUpdate(array $data, $column, $value)
     {
-        foreach ($data as $key => $value) {
+        foreach ($data as $key => $values) {
             if (is_array($this->check) && in_array($key, $this->check)) {
-                $check = $this->find($key, $value)->fetch();
+                $check = $this->find($key, $values)->fetch();
                 if ($check)
                 {
                     return ucfirst($key);
@@ -272,5 +279,6 @@ abstract class BaseModel
             }
         }
         $this->update($data, $column, $value);
+        return $this->find($column, $value)->fetch();
     }
 }

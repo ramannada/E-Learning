@@ -5,7 +5,12 @@ default:
                 - FeatureContext:
                     parameters:
                         base_url: http://localhost:8080/public/
+<<<<<<< HEAD:behat.yml
                 - TokenContext
+=======
+                - ParamContext
+                - UserContext
+>>>>>>> upstream/add_web_register_login_feature:behat.yml.example
 
     extensions:
         Behat\MinkExtension:
