@@ -131,9 +131,15 @@ class UserController extends \App\Controllers\BaseController
                 $data = $this->responseDetail("Email not registered", 404);
             } else {
                 $passwordReset = new \App\Models\Users\PasswordReset;
-                $passwordReset->setToken($find['id']);
+                $setToken = $passwordReset->setToken($find['id']);
 
-                $this->mailer->send('templates/mailer/password_reset.twig', ['user' => $find], function($message) use ($find) {
+                if (is_int($setToken)) {
+                    $findToken = $passwordReset->find('id', $setToken)->fetch();
+                } else {
+                    $findToken = $setToken;
+                }
+
+                $this->mailer->send('templates/mailer/password_reset.twig', ['token' => $findToken], function($message) use ($find) {
                         $message->to($find['email']);
                         $message->subject('Reset your password');
                 });
