@@ -1,4 +1,5 @@
 <?php
+
 use Behat\Behat\Context\ClosuredContextInterface;
 use Behat\Behat\Context\TranslatedContextInterface;
 use Behat\Behat\Context\Context;
@@ -13,7 +14,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Doctrine\DBAL\Driver\PDOMySql\Driver;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
+
 /**
  * Defines application features from the specific context.
  */
@@ -24,7 +27,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     private $_request;
     protected $_response;
     public $_body;
-    protected $tokenContext;
+    protected $paramContext;
+
     /**
      * Initializes context.
      *
@@ -35,44 +39,84 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct(array $parameters)
     {
         $this->_parameters = $parameters;
-        $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
+        $this->_client = new Client(['base_uri' => $this->_parameters['base_url'], 'headers' => ['Content-Type' => 'application/json', 'Authorization' => $this->paramContext->token]]);
     }
+
      /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
     
-        $this->tokenContext = $environment->getContext('TokenContext');
+        $this->paramContext = $environment->getContext('ParamContext');
     }
+
+    private function setDb()
+    {
+        global $container;
+
+        $this->db = $container['db'];
+    }
+
+    private function getBuilder()
+    {
+        return $this->db->createQueryBuilder();
+    }
+
     /**
      * @When I GET url :url
      */
     public function iGetUrl($url)
     {
-        $headers = [
-            'Content-type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
-        ];
         $this->_response = $this->_client->request('GET', $url, ['headers' => $headers]);
     }
+
     /**
-     * @When I GET url :url in page :page
+     * @When I GET url :url with param:
      */
-    public function iGetUrlInPage($url, $page)
+    public function iGetUrlInParam($url, TableNode $table)
     {
-        $headers = [
-            'Content-type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
-        ];
-        $query = [
-            'page'  => $page,
-        ];
-        $options = [
-            'headers'   => $headers,
-            'query'     => $query,
-        ];
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
         $this->_response = $this->_client->request('GET', $url, $options);
     }
+
+    /**
+     * @When I GET url :url by column :column
+     */
+    public function iGetUrlByColumn($url, $column)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        $this->_response = $this->_client->request('GET', $url);
+    }
+
+    /**
+     * @When I GET url :url by column :column and with param:
+     */
+    public function iGetUrlByColumnAndWithParam($url, $column, TableNode $table)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+
+        $this->_response = $this->_client->request('GET', $url, $options);
+    }
+
     /**
      * @When I POST url :url
      */
@@ -83,26 +127,201 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             'url'   => $url,
         ];
     }
+
     /**
-     * @When I PUT url :url with id :id
+     * @When I POST url :url with param:
      */
-    public function iPutUrl($url, $id)
+    public function iPostUrlWithParam($url, TableNode $table = null)
+    {
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+        $this->_request = [
+            'method'=> 'POST',
+            'url'   => $url,
+            'query' => $options['query'],
+        ];
+    }
+
+    /**
+     * @When I POST url :url by column :column
+     */
+    public function iPostUrlByColumn($url, $column)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        $this->_request = [
+            'method'=> 'POST',
+            'url'   => $url,
+        ];
+    }
+
+    /**
+     * @When I POST url :url by column :column and with param:
+     */
+    public function iPostUrlByColumnAndWithParam($url, $column, TableNode $table)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+
+        $this->_request = [
+            'method'=> 'POST',
+            'url'   => $url,
+            'query' => $options['query'],
+        ];
+    }
+
+    /**
+     * @When I PUT url :url
+     */
+    public function iPutUrl($url)
     {
         $this->_request = [
             'method'=> 'PUT',
-            'url'   => $url.'/'.$id,
+            'url'   => $url,
         ];
     }
+
     /**
-     * @When I Delete url :url with id :id
+     * @When I PUT url :url with param:
      */
-    public function iDeleteUrl($url, $id)
+    public function iPutUrlWithParam($url, TableNode $table = null)
     {
-        $headers = [
-            'Content-type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+        $this->_request = [
+            'method'=> 'PUT',
+            'url'   => $url,
+            'query' => $options['query'],
         ];
-        $this->_response = $this->_client->request('DELETE', $url.'/'.$id, ['headers' => $headers]);
+    }
+
+    /**
+     * @When I PUT url :url by column :column
+     */
+    public function iPutUrlByColumn($url, $column)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        $this->_request = [
+            'method'=> 'PUT',
+            'url'   => $url,
+        ];
+    }
+
+    /**
+     * @When I PUT url :url by column :column and with param:
+     */
+    public function iPutUrlByColumnAndWithParam($url, $column, TableNode $table)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+
+        $this->_request = [
+            'method'=> 'PUT',
+            'url'   => $url,
+            'query' => $options['query'],
+        ];
+    }
+
+    /**
+     * @When I DELETE url :url
+     */
+    public function iDeleteUrl($url)
+    {
+        $this->_request = [
+            'method'=> 'DELETE',
+            'url'   => $url,
+        ];
+    }
+
+    /**
+     * @When I DELETE url :url with param:
+     */
+    public function iDeleteUrlWithParam($url, TableNode $table = null)
+    {
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+        $this->_request = [
+            'method'=> 'DELETE',
+            'url'   => $url,
+            'query' => $options['query'],
+        ];
+    }
+
+    /**
+     * @When I DELETE url :url by column :column
+     */
+    public function iDeleteUrlByColumn($url, $column)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        $this->_request = [
+            'method'=> 'DELETE',
+            'url'   => $url,
+        ];
+    }
+
+    /**
+     * @When I DELETE url :url by column :column and with param:
+     */
+    public function iDeleteUrlByColumnAndWithParam($url, $column, TableNode $table)
+    {
+        $column = explode(',', $column);
+
+        foreach ($column as $key => $value) {
+            $columns[$value] = $this->paramContext->{$value};
+        }
+
+        $url = $url. '/'. implode('/', $columns);
+
+        foreach ($table as $key => $value) {
+            $options['query'] = $value;
+        }
+
+        $this->_request = [
+            'method'=> 'DELETE',
+            'url'   => $url,
+            'query' => $options['query'],
+        ];
     }
     /**
      * @When I fill :name with :value
@@ -128,11 +347,12 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             ];
             $body = json_encode($this->_body);
             $this->_response = $this->_client
-                                    ->request($this->_request['method'], $this->_request['url'], ['headers' => $headers, 'json' => $this->_body]);
+                                    ->request($this->_request['method'], $this->_request['url'], ['headers' => $headers, 'query' => $this->_request['query'], 'json' => $this->_body]);
         } catch (Exception $exception) {
             $this->getException($exception);
         }
     }
+
     /**
      * @Then I see the result
      */
@@ -140,38 +360,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         echo $this->_response->getBody();
     }
-    /**
-     * @When I GET url :url by :param with :value
-     */
-    public function getBy($url, $param, $value)
-    {
-        $headers = [
-            'Content-type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
-        ];
-        $query = [
-            $param  => $value,
-        ];
-        $options = [
-            'headers'   => $headers,
-            'query'     => $query,
-        ];
-        $this->_response = $this->_client->request('GET', $url, $options);
-    }
-    /**
-     * @seting database connect
-     */
-    public function dbConnect()
-    {
-        $file = json_decode(file_get_contents("config.json", 'r'), true);
-        $username = $file['user'];
-        $password = $file['pass'];
-        $hostname = 'mysql:host=' . $file['host'] ;
-        $database = 'dbname=' . $file['db'];
-        $port     = 'port=' . $file['port'];
-        $dbh = new PDO($hostname.';'.$database.';'.$port, $username, $password);
-        return $dbh;
-    }
+    
     /**
      * @getException Error
      */
@@ -187,19 +376,5 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 throw new Exception($data->message);
             }
         }
-    }
-    /**
-     * @When I active user with email :email
-     */
-    public function iActiveUserWithEmail($email)
-    {
-        $this->dbConnect()->query("UPDATE users SET is_active = 1 where email = '$email'");
-    }
-     /**
-     * @When I delete user with email :email
-     */
-    public function iDeleteUserWithEmail($email)
-    {
-        $this->dbConnect()->query("DELETE FROM users where email = '$email'");
     }
 }
