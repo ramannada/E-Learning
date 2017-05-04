@@ -27,7 +27,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     private $_request;
     protected $_response;
     public $_body;
-    protected $tokenContext;
+    protected $paramContext;
+
     /**
      * Initializes context.
      *
@@ -38,26 +39,40 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct(array $parameters)
     {
         $this->_parameters = $parameters;
-        $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
+        $this->_client = new Client(['base_uri' => $this->_parameters['base_url'], 'headers' => ['Content-Type' => 'application/json', 'Authorization' => $this->paramContext->token]);
     }
+
      /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
     
-        $this->tokenContext = $environment->getContext('TokenContext');
+        $this->paramContext = $environment->getContext('ParamContext');
     }
+
+    private function setDb()
+    {
+        global $container;
+
+        $this->db = $container['db'];
+    }
+
+    private function getBuilder()
+    {
+        if ($this->db == null) {
+            $this->setDb();
+        }
+        return $this->db->createQueryBuilder();
+    }
+
     /**
      * @When I GET url :url
      */
     public function iGetUrl($url)
     {
-        $headers = [
-            'Content-type'  => 'application/json',
-            'Authorization' => $this->tokenContext->token,
-        ];
-        $this->_response = $this->_client->request('GET', $url, ['headers' => $headers]);
+        $this->_response = $this->_client->request('GET', $url);
     }
+    
     /**
      * @When I GET url :url in page :page
      */
