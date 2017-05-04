@@ -4,12 +4,13 @@ default:
             contexts:
                 - FeatureContext:
                     parameters:
-                        base_url: http://php/public/
-                - TokenContext
+                        base_url: http://localhost:8080/public/
+                - ParamContext
+                - UserContext
 
     extensions:
         Behat\MinkExtension:
-            base_url: http://php/public/
+            base_url: http://localhost:8080/public/
             sessions:
                 goutte:
                     goutte: ~
