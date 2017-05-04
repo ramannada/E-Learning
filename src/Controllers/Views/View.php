@@ -36,7 +36,17 @@ class View extends \App\Controllers\BaseController
         return $this->view->render($response, 'user/register.twig');
     }
 
-     public function upgrade(Request $request, Response $response)
+    public function resetPassword(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'user/resetpassword.twig');
+    }
+
+    public function newPassword(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'user/newpassword.twig');
+    }
+
+    public function upgrade(Request $request, Response $response)
     {
         return $this->view->render($response, 'user/beforelogin/users/upgrade_premium.twig');
     }
