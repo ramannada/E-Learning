@@ -1,22 +1,25 @@
-<?php include 'header_front.php'; ?>
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          Latest Articles 
-        </h1>
-      </section>
+{% extends 'user/beforelogin/templates/template.twig' %}
 
-      <!-- Main content -->
-      <section class="content">
+{% block title %} E-Learning {% endblock %}
+
+{% block css %}
+    <style>
+        .item{
+          font-size: .85em;
+          color: #9f9f9f;
+        }
+    </style>
+{% endblock %}
+
+{% block header_content %} Latest Articles {% endblock %}
+
+{% block content %}
 <div class="row">
    <div class="col-lg-8">
         <div class="well">
               <div class="timeline-item">
 
-                <h3 class="timeline-header"><a href="article_detail.php">Support Team sent you an email</a></h3>
+                <h3 class="timeline-header"><a href="{{ path_for('article.detail') }}">Support Team sent you an email</a></h3>
                 <span class="time"><i class="fa fa-calendar-o"></i> 1 May 2017, at 12:05</span>
 
                 <div class="timeline-body">
@@ -34,7 +37,7 @@
 <hr>
               <div class="timeline-item">
 
-                <h3 class="timeline-header"><a href="article_detail.php">Support Team sent you an email</a></h3>
+                <h3 class="timeline-header"><a href="{{ path_for('article.detail') }}">Support Team sent you an email</a></h3>
                 <span class="time"><i class="fa fa-calendar-o"></i> 1 May 2017, at 12:05</span>
 
                 <div class="timeline-body">
@@ -52,7 +55,7 @@
 <hr>
               <div class="timeline-item">
 
-                <h3 class="timeline-header"><a href="article_detail.php">Support Team sent you an email</a></h3>
+                <h3 class="timeline-header"><a href="{{ path_for('article.detail') }}">Support Team sent you an email</a></h3>
                 <span class="time"><i class="fa fa-calendar-o"></i> 1 May 2017, at 12:05</span>
 
                 <div class="timeline-body">
@@ -129,22 +132,4 @@
       </div>
       
     </div>
-    <!-- /.container -->
-  </footer>
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../../bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../../plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-</body>
-</html>
+{% endblock %}

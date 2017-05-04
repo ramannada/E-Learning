@@ -1,21 +1,11 @@
-<?php include 'header_dashboard.php'; ?>
+{% extends 'user/afterlogin/templates/template.twig' %}
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
 
-    <!-- Main content -->
-    <section class="content">
-      <!-- Default box -->
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <ul class="list-group">
-              <li class="list-group-item"><a href="dashboard_account.php">Overview</a></li>
-              <li class="list-group-item"><a href="dashboard_profile.php">Profile</a></li>
-              <li class="list-group-item"><a href="dashboard_change_password.php">Change password</a></li>
-            </ul>
-          </div>
+{% block title %} E-Learning {% endblock %}
+
+{% block content %}
+    <div class="row">
+     {% include 'user/afterlogin/users/partials/sidebar.twig' %}
           <div class="col-lg-9">
             <h3>Profile</h3>
             <div class="well"> 
@@ -35,13 +25,5 @@
                   <button type="submit" class="btn btn-default">Update</button>
                 </form>
 
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-<?php include 'footer.php';
+            </div>    
+{% endblock %}

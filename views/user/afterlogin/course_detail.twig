@@ -1,10 +1,9 @@
-<?php include 'header_dashboard.php'; ?>
+{% extends 'user/afterlogin/templates/template.twig' %}
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-   <section class="content-header">
-     <div class="container">
+{% block title %} Dashboard Course Detail {% endblock %}
+
+{% block content %}
+    <div class="container">
        <div class="well">
       <h1>
         End-to-end Browser Testing with Laravel Dusk
@@ -27,9 +26,9 @@
       </div>
       </div>
    </section>
-    <!-- Main content -->
+    
     <section class="content">
-      <!-- Default box -->
+      
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -69,41 +68,39 @@
       <h3>Comment Course</h3>
                  <div class="box-footer box-comments">
               <div class="box-comment">
-                <!-- User image -->
-                <img class="img-circle img-sm" src="../../dist/img/user3-128x128.jpg" alt="User Image">
+                <img class="img-circle img-sm" src="http://www.besthomecaremn.com/wp-content/uploads/2016/03/question-mark.svg" alt="User Image">
 
                 <div class="comment-text">
                       <span class="username">
-                        <a href="dashboard_another_profile.php">Maria Gonzales</a>
+                        <a href="{{ path_for('dashboard.profile.another') }}">Maria Gonzales</a>
                         <span class="text-muted pull-right">8:03 PM Today</span>
-                      </span><!-- /.username -->
+                      </span>
                   It is a long established fact that a reader will be distracted
                   by the readable content of a page when looking at its layout.
                 </div>
-                <!-- /.comment-text -->
+                
               </div>
-              <!-- /.box-comment -->
+              
               <div class="box-comment">
-                <!-- User image -->
-                <img class="img-circle img-sm" src="../../dist/img/user4-128x128.jpg" alt="User Image">
+                
+                <img class="img-circle img-sm" src="http://www.besthomecaremn.com/wp-content/uploads/2016/03/question-mark.svg" alt="User Image">
 
                 <div class="comment-text">
                       <span class="username">
-                        <a href="dashboard_another_profile.php">Luna Stark</a>
+                        <a href="{{ path_for('dashboard.profile.another') }}">Luna Stark</a>
                         <span class="text-muted pull-right">8:03 PM Today</span>
-                      </span><!-- /.username -->
+                      </span>
                   It is a long established fact that a reader will be distracted
                   by the readable content of a page when looking at its layout.
                 </div>
-                <!-- /.comment-text -->
+                
               </div>
-              <!-- /.box-comment -->
+              
             </div>
-            <!-- /.box-footer -->
+            
             <div class="box-footer">
               <form action="#" method="post">
-                <img class="img-responsive img-circle img-sm" src="../../dist/img/user4-128x128.jpg" alt="Alt Text">
-                <!-- .img-push is used to add margin to elements next to floating images -->
+                <img class="img-responsive img-circle img-sm" src="http://www.besthomecaremn.com/wp-content/uploads/2016/03/question-mark.svg" alt="Alt Text">
                 <div class="img-push">
                   <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
                 </div>
@@ -132,8 +129,4 @@
 
         </div>
       </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-<?php include 'footer.php';
+{% endblock %}

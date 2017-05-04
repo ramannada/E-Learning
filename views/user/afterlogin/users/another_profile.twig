@@ -1,21 +1,22 @@
-<?php include 'header_dashboard.php'; ?>
+{% extends 'user/afterlogin/templates/template.twig' %}
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+{% block title %} Dashboard Course {% endblock %}
 
-    <!-- Main content -->
-    <section class="content">
-      <!-- Default box -->
-      <div class="container">
+{% block css %}
+    <style>
+        .item{
+          font-size: .85em;
+          color: #9f9f9f;
+        }
+    </style>
+{% endblock %}
 
-      <div class="row">
+{% block content %}
+    <div class="row">
         <div class="col-md-3">
-
-          <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="http://www.besthomecaremn.com/wp-content/uploads/2016/03/question-mark.svg" alt="User profile picture">
 
               <h3 class="profile-username text-center">Mamang</h3>
 
@@ -33,13 +34,12 @@
                 </li>
               </ul>
             </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
 
-          <!-- /.box -->
+          </div>
+
+
+
         </div>
-        <!-- /.col -->
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
@@ -90,17 +90,10 @@
               </div>
 
               </div>
-              <!-- /.tab-pane -->
+    
             </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
 
-    </section>
-    <!-- /.content -->
-  </div>
-<?php include 'footer.php';
+          </div>
+
+        </div>
+{% endblock %}
