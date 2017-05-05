@@ -1,6 +1,6 @@
-Feature: Update Profile User
+Feature: User Register And Login
 
-	Scenario: Register New User
+    Scenario: Register New User
         When I POST url "api/register"
         And I fill "username" with "testbehat"
         And I fill "password" with "testbehat"
@@ -16,14 +16,6 @@ Feature: Update Profile User
         And I fill "username" with "testbehat"
         And I fill "password" with "testbehat"
         Then I store it
-
-    Scenario: Update Profile
-    	Given token with username "testbehat"
-        Given information about user with username "testbehat"
-    	When I PUT url "api/profile/edit" by column "id"
-    	And I fill "name" with "testbehatedit"
-    	And I fill "email" with "testbehat@gmail.com"
-    	Then I store it
 
     Scenario: Delete New User
         When I delete user with username "testbehat"
