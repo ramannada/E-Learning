@@ -115,4 +115,39 @@ class UserController extends \App\Controllers\BaseController
         unset($_SESSION['login']);
         return $response->withRedirect($this->router->pathFor('web.home'));
     }
+
+    public function getPasswordReset(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'user/resetpassword.twig');
+    }
+
+    public function postPasswordReset(Request $request, Response $response)
+    {
+        $body = $request->getParsedBody();
+
+        try {
+            $reset = $this->testing->request('POST', $this->router->pathFor('api.user.password.reset'),['json' => $body]);
+
+            if ($reset->getStatusCode() == 200) {
+                $this->flash->addMessage('info', 'Check your mail for reset password');
+
+                $resp = $response->withRedirect($this->router->pathFor('web.home'));
+            } else {
+                $this->flash->addMessage('errors', 'Your email not registered');
+
+                $resp = $response->withRedirect($this->router->pathFor('web.user.password.reset'));
+            }
+        } catch (GuzzleException $e) {
+            $error = json_decode($e->getResponse()->getBody()->getContents())->data;
+
+            $this->flash->addMessage('errors', $error);
+
+            return $response->withRedirect($this->router->pathFor('web.user.password.reset'));
+        }
+    }
+
+    public function getSetPasswordReset(Request $request, Response $response)
+    {
+
+    }
 }

@@ -152,6 +152,11 @@ class UserController extends \App\Controllers\BaseController
 
         return $data;
     }
+
+    public function getPasswordReset(Request $request, Response $response)
+    {
+        
+    }
 }
 
 ?>

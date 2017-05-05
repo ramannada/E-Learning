@@ -4,7 +4,7 @@ $app->group('/api', function() use ($app,$container) {
     $app->post('/register', 'App\Controllers\Api\UserController:register')->setName('api.user.register');
     $app->get('/active', 'App\Controllers\Api\UserController:activeUser')->setName('api.user.active');
     $app->post('/login', 'App\Controllers\Api\UserController:login')->setName('api.user.login');
-    $app->post('/password_reset', 'App\Controllers\Api\UserController:passwordReset');
+    $app->post('/password_reset', 'App\Controllers\Api\UserController:passwordReset')->setName('api.user.password.reset');
 });
 
 $app->group('', function() use ($app,$container) {
@@ -18,7 +18,9 @@ $app->group('', function() use ($app,$container) {
 	$app->get('/login', 'App\Controllers\Web\UserController:getLogin')->setName('web.user.login');
     $app->get('/logout', 'App\Controllers\Web\UserController:logout')->setName('web.user.logout');
     $app->post('/login', 'App\Controllers\Web\UserController:postLogin')->setName('web.post.user.login');
-    $app->get('/password_reset', 'App\Controllers\Web\UserController:passwordReset')->setName('web.user.password.reset');
+
+    $app->get('/password_reset', 'App\Controllers\Web\UserController:getPasswordReset')->setName('web.user.password.reset');
+    $app->post('/password_reset', 'App\Controllers\Web\UserController:postPasswordReset');
 });
 
 ?>

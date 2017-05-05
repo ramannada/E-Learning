@@ -40,7 +40,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct(array $parameters)
     {
         $this->_parameters = $parameters;
-        $this->_client = new Client(['base_uri' => $this->_parameters['base_url'], 'headers' => ['Content-Type' => 'application/json', 'Authorization' => $this->paramContext->token]]);
+        $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
     }
 
      /** @BeforeScenario */
@@ -53,7 +53,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
     public function setDb()
     {
-        $setting['url'] = 'mysql://root:root@db/elearning'; 
+        $setting['url'] = 'mysql://root:root@db/e-learning'; 
         
         $config = new \Doctrine\DBAL\Configuration();
 
