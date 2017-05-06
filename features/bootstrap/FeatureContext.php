@@ -48,7 +48,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-    
+
         $this->paramContext = $environment->getContext('ParamContext');
     }
 
