@@ -92,6 +92,10 @@ class UserController extends \App\Controllers\BaseController
 
                 $getToken = $token->setToken($login['id']);
 
+                if (is_int($getToken)) {
+                    $getToken = $token->find('id', $getToken);
+                }
+
                 $role = new \App\Models\Users\UserRole;
                 $findRole = $role->find('user_id', $getToken['user_id'])->fetch();
 
