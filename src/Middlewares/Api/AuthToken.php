@@ -28,6 +28,7 @@ class AuthToken extends \App\Middlewares\BaseMiddleware
 					return $response->withHeader('Content-type', 'application/json')->withJson($data, $data['status']);
 			}
 		}
+		
 		$response = $next($request, $response);
 
 		return $response;

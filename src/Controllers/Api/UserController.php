@@ -109,9 +109,23 @@ class UserController extends \App\Controllers\BaseController
         return $data;
     }
 
-    public function editProfile(Request $request, Response $response, $args)
+    public function getEditProfile(Request $request, Response $response, $args)
     {
-        $post = $request->getParsedBody();
+        $user = new \App\Models\Users\User;
+        $findUser = $user->find('id', $args['id'])->fetch();
+
+        $data = [
+            'name'  => $findUser['name'],
+            'email' => $findUser['email'],
+            'photo' => $findUser['photo'],
+        ];
+
+        return $this->responseDetail("Data Available", 200, $data);
+    }
+
+    public function putEditProfile(Request $request, Response $response, $args)
+    {
+        $post = $request->getParams();
 
         $rule = [
             'required' => [
@@ -133,7 +147,33 @@ class UserController extends \App\Controllers\BaseController
                 unset($post['email']);
             }
 
-            $update = $user->checkOrUpdate($post, 'id', $findUser['id']);
+            if ($request->getParam('photo')) {
+                $file = new \Upload\File('photo', $this->upload);
+
+                $file->setName(uniqid());
+
+                $file->addValidations(array(
+
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                        'image/jpg', 'image/jpeg')),
+                        new \Upload\Validation\Size('5M')));
+
+                if ($request->getParam('photo') != $findUser['photo']) {
+                    $photo = $file->getNameWithExtension();
+                }
+
+                if ($file->upload()) {
+                    if ($findUser['photo']) {
+                        unlink('upload/'.$findUser['photo']);
+                    }
+                } else {
+                    $errors = $file->getErrors();
+
+                    $data = $this->responseDetail("Error", 400, $errors);
+                }
+            }
+
+            $update = $user->updateProfile($post, $findUser['id'], $photo);
 
             if (is_array($update)) {
                 $data = $this->responseDetail("Update Success", 200, $update);
