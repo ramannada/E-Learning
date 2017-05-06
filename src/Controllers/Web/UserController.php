@@ -126,28 +126,77 @@ class UserController extends \App\Controllers\BaseController
         $body = $request->getParsedBody();
 
         try {
-            $reset = $this->testing->request('POST', $this->router->pathFor('api.user.password.reset'),['json' => $body]);
-
-            if ($reset->getStatusCode() == 200) {
-                $this->flash->addMessage('info', 'Check your mail for reset password');
-
-                $resp = $response->withRedirect($this->router->pathFor('web.home'));
-            } else {
-                $this->flash->addMessage('errors', 'Your email not registered');
+            $reset = $this->testing->request('POST', $this->router->pathFor('api.user.password.reset'), ['json' => $body]);
+            
+            if ($reset->getStatusCode() == 201) {
+                $this->flash->addMessage('success', 'Check your mail for reset password');
 
                 $resp = $response->withRedirect($this->router->pathFor('web.user.password.reset'));
             }
         } catch (GuzzleException $e) {
-            $error = json_decode($e->getResponse()->getBody()->getContents())->data;
+            $error = json_decode($e->getResponse()->getBody()->getContents());
 
-            $this->flash->addMessage('errors', $error);
+            if ($error->data) {
+                $errors = $error->data->email[0];
+            } else {
+                $errors = $error->message;
+            }
 
-            return $response->withRedirect($this->router->pathFor('web.user.password.reset'));
+            $this->flash->addMessage('errors', $errors);
+
+            $resp = $response->withRedirect($this->router->pathFor('web.user.password.reset'));
+        }
+
+        return $resp;
+    }
+
+    public function getReNewPassword(Request $request, Response $response)
+    {
+        $options = [
+            'query' => [
+                'token' => $request->getQueryParam('token'),
+            ]
+        ];
+
+        try {
+            $reNewPassword = $this->testing->request('GET', $this->router->pathFor('api.user.get.renew.password'), $options);
+
+            if ($reNewPassword->getStatusCode() == 200) {
+                $this->view->render($response, 'user/newpassword.twig');
+            }
+        } catch (GuzzleException $e) {
+            throw new \Slim\Exception\NotFoundException($request, $response);
         }
     }
 
-    public function getSetPasswordReset(Request $request, Response $response)
+    public function postReNewPassword(Request $request, Response $response)
     {
+        $body = $request->getParsedBody();
 
+        try {
+            $reNewPassword = $this->testing->request('PUT', $this->router->pathFor('api.user.put.renew.password'), ['json' => $body]);
+
+            if ($reNewPassword->getStatusCode() == 200) {
+                $this->flash->addMessage('success', 'Password Has Been Change');
+
+                $resp = $this->response->withRedirect($this->router->pathFor('web.user.login')); 
+            }
+        } catch (GuzzleException $e) {
+            $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+
+            if (is_array($error['data'])) {
+                foreach ($error['data'] as $key => $val) {
+                    $_SESSION['errors'][$key] = $val;
+                }
+            } else {
+                $errorArr = explode(' ', $error);
+
+                $_SESSION['errors'][lcfirst($errorArr[0])][] = $error;
+            }
+
+            $resp = $this->view->render($response, 'user/newpassword.twig'); 
+        }
+
+        return $resp;
     }
 }

@@ -128,7 +128,7 @@ class UserController extends \App\Controllers\BaseController
             $find = $user->find('email', $request->getParam('email'))->fetch();
 
             if (!$find) {
-                $data = $this->responseDetail("Email not registered", 404);
+                $data = $this->responseDetail("Email not registered", 400);
             } else {
                 $passwordReset = new \App\Models\Users\PasswordReset;
                 $setToken = $passwordReset->setToken($find['id']);
@@ -153,9 +153,60 @@ class UserController extends \App\Controllers\BaseController
         return $data;
     }
 
-    public function getPasswordReset(Request $request, Response $response)
+    public function getReNewPassword(Request $request, Response $response)
     {
-        
+        $pass = new \App\Models\Users\PasswordReset;
+
+        $token = $request->getQueryParam('token');
+
+        $find = $pass->find('token', $token)->fetch();
+
+        if ($find) {
+            $data = $this->responseDetail("Success Get Token", 200);
+        } else {
+            $data = $this->responseDetail("Data Not Found", 404);
+        }
+
+        return $data;
+    }
+
+    public function postReNewPassword(Request $request, Response $response)
+    {
+        $user = new \App\Models\Users\User;
+
+        $rule = [
+            'required' => [
+                ['password'],
+                ['retype_password'],
+            ],
+            'lengthMin' => [
+                ['password', 6],
+                ['retype_password', 6],
+            ],
+            'equals' => [
+                ['retype_password', 'password']
+            ],
+        ];
+
+        $this->validator->rules($rule);
+
+        if ($this->validator->validate()) {
+            $passwordToken = new \App\Models\Users\PasswordReset;
+
+            $token = $request->getQueryParam('token');
+
+            $findUserId = $passwordToken->find('token', $token)->fetch();
+            
+            $req = $request->getParsedBody();
+            
+            $updatePassword = $user->resetPassword($req, 'id', $findUserId['user_id']);
+
+            $data = $this->responseDetail('Success Update Password', 200);
+        } else {
+            $data = $this->responseDetail('Error', 400, $this->validator->errors());
+        }
+
+        return $data;
     }
 }
 
