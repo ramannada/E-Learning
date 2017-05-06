@@ -365,7 +365,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $options = $this->setOptions($query, $json);
 
         try {
-            $body = json_encode($this->_body);
 
             $token = $this->paramContext->token;
 
@@ -391,13 +390,13 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $getResponse = $exception->getResponse();
 
-        $data =  json_decode($getResponse->getBody()->getContents());
+        $data = json_decode($getResponse->getBody()->getContents());
  
         if (!($data->status == 200)) {
             if (!empty($data->data)) {
                 throw new Exception($data->data);
             } else {
-                throw new Exception($data->message);
+                throw new Exception($data);
             }
         }
     }

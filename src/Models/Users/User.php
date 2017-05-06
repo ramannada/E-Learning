@@ -30,6 +30,10 @@ class User extends \App\Models\BaseModel
             'photo' => $photo,
         ];
 
+        if (!$data['email']) {
+            unset($data['email']);
+        }
+
         if ($photo == null) {
             unset($data['photo']);
         }
