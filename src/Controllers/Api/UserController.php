@@ -151,7 +151,8 @@ class UserController extends \App\Controllers\BaseController
                 unset($post['email']);
             }
 
-            if ($request->getParam('photo')) {
+
+            if ($request->getUploadedFiles()) {
                 $file = new \Upload\File('photo', $this->upload);
 
                 $file->setName(uniqid());
@@ -162,19 +163,20 @@ class UserController extends \App\Controllers\BaseController
                         'image/jpg', 'image/jpeg')),
                         new \Upload\Validation\Size('5M')));
 
-                if ($request->getParam('photo') != $findUser['photo']) {
-                    $photo = $file->getNameWithExtension();
-                }
+                $photo = $file->getNameWithExtension();
 
-                if ($file->upload()) {
-                    if ($findUser['photo']) {
+                try {
+                    $file->upload();
+
+                    if ($findUser['photo'] != 'default_user.png') {
                         unlink('upload/'.$findUser['photo']);
                     }
-                } else {
+                } catch (\Exception $e) {
                     $errors = $file->getErrors();
 
-                    $data = $this->responseDetail("Error", 400, $errors);
+                    return $this->responseDetail("Error", 400, $errors);
                 }
+
             }
 
             $update = $user->updateProfile($post, $findUser['id'], $photo);

@@ -30,7 +30,7 @@ class AuthToken extends \App\Middlewares\BaseMiddleware
 		}
 		
 		$response = $next($request, $response);
-
+		
 		return $response;
 	}
 
