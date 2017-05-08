@@ -28,6 +28,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     protected $_response;
     public $_body;
     protected $paramContext;
+    public $db;
 
     /**
      * Initializes context.
@@ -364,6 +365,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
 
         try {
             $body = json_encode($this->_body);
+
             $this->_response = $this->_client
                                     ->request($this->_request['method'], $this->_request['url'], $options);
         } catch (Exception $exception) {
@@ -377,14 +379,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iSeeTheResult()
     {
         echo $this->_response->getBody();
-    }
-    
+    }    
+
     /**
      * @getException Error
      */
     public function getException($exception)
     {
         $getResponse = $exception->getResponse();
+
         $data =  json_decode($getResponse->getBody()->getContents());
  
         if (!($data->status == 200)) {
@@ -394,5 +397,13 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 throw new Exception($data->message);
             }
         }
+    }
+
+    /**
+     * @When I set timestamps
+     */
+    public function aa()
+    {
+        echo date('Y-m-d H:i:s');
     }
 }
