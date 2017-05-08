@@ -48,7 +48,8 @@ return [
 	'guzzle'	=> [
 		'base_uri' => 'http://172.17.0.1:8080/public/',
 		'headers'  => [
-			'Content-Type' => 'application/json',
+			'Content-Type' 	=> 'application/json',
+			'Authorization'	=> $_SESSION['login']['meta']['token']['token'],
 		],
 	],
 
