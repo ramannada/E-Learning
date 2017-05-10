@@ -4,6 +4,8 @@ $app->group('/api', function() use ($app,$container) {
 	$app->post('/register', 'App\Controllers\Api\UserController:register');
 	$app->get('/active', 'App\Controllers\Api\UserController:activeUser')->setName('api.user.active');
 	$app->post('/login', 'App\Controllers\Api\UserController:login');
+    $app->get('/user/role[/{role_id}]', 'App\Controllers\Api\UserController:getUserByRole'); // Get user by role
+    $app->post('/user/role', 'App\Controllers\Api\UserController:setRoleAdminCourse');
 
 });
 

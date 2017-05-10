@@ -112,6 +112,33 @@ class UserController extends \App\Controllers\BaseController
 
         return $data;
     }
+
+    public function setRoleAdminCourse(Request $request, Response $response, $args)
+    {
+        foreach ($request->getParam('user_id') as $key => $value) {
+            $user = new \App\Models\Users\UserRole;
+            $update = ['role_id' => 2];
+            $setRole = $user->update($update, 'user_id', $value);
+        }
+
+        $data = $this->responseDetail('Success change role', 200);
+
+        return $data;
+    }
+
+    public function getUserByRole(Request $request, Response $response, $args)
+    {
+        $user = new \App\Models\Users\UserRole;
+        $find = $user->find('role_id', $args['role_id'])->fetchAll();
+
+        if (!$find) {
+            $data = $this->responseDetail('Error', 404, 'No user found');
+        } else {
+            $data = $this->responseDetail(null, 200, $find);
+        }
+
+        return $data;
+    }
 }
 
 ?>
