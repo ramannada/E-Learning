@@ -42,15 +42,13 @@ class UserController extends \App\Controllers\BaseController
                         $message->to($find['email']);
                         $message->subject('Active Your Account');
                 });
-                $data = $this->responseDetail("Register Success", 201, $find);
+                return $this->responseDetail("Register Success", 201, $find);
             } else {
-                $data = $this->responseDetail($addUser . " already used", 400);
+                return $this->responseDetail($addUser . " already used", 400);
             }
         }  else {
-            $data = $this->responseDetail("Error", 400, $this->validator->errors());
+            return $this->responseDetail("Error", 400, $this->validator->errors());
         }
-
-        return $data;
     }
 
     public function activeUser(Request $request, Response $response)
@@ -66,14 +64,12 @@ class UserController extends \App\Controllers\BaseController
 
             $user->update($update, 'id', $findUser['id']);
 
-            $data = $this->responseDetail("Verification Success", 200);
+            return $this->responseDetail("Verification Success", 200);
         } elseif ($findUser && $findUser['is_active'] == 1) {
-            $data = $this->responseDetail("You account is verified", 400);
+            return $this->responseDetail("You account is verified", 400);
         } else {
-            $data = $this->responseDetail("Data Not Found", 404);
+            return $this->responseDetail("Data Not Found", 404);
         }
-
-        return $data;
     }
 
     public function login(Request $request, Response $response)
@@ -104,13 +100,11 @@ class UserController extends \App\Controllers\BaseController
                     'role'  => $findRole['role_id'],
                 ];
 
-                $data = $this->responseDetail("Login Success", 200, $login, $key);
+                return $this->responseDetail("Login Success", 200, $login, $key);
             } else {
-                $data = $this->responseDetail("Error", 401, "Wrong Password");
+                return $this->responseDetail("Error", 401, "Wrong Password");
             }
         }
-
-        return $data;
     }
 }
 
