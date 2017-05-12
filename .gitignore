@@ -4,4 +4,3 @@ app/settings.php
 composer.lock
 mysql/
 behat.yml
-features/bootstrap/config.json

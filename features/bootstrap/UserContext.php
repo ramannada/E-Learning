@@ -43,4 +43,23 @@ class UserContext implements Context
     	   ->setParameter(':username', $username)
     	   ->execute();
     }
+
+     /**
+     * @Given information about user with username :username
+     */
+    public function getUser($username)
+    {
+        $qb = $this->featureContext->getBuilder();
+        
+        $find = $qb->select('*')
+                   ->from('users')
+                   ->where('username = :username')
+                   ->setParameter(':username', $username)
+                   ->execute()
+                   ->fetch();
+
+        foreach ($find as $key => $value) {
+            $this->paramContext->{$key} = $value;
+        }
+    }
 }

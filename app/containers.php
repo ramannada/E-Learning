@@ -35,15 +35,7 @@ $container['view'] = function (Container $container) {
 
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
-	$view->getEnvironment()->addGlobal('baseUrl', 'http://localhost:8080');
-
-    if (isset($_SESSION['login'])) {
-        $view->getEnvironment()->addGlobal('login', $_SESSION['login']);
-    }
-    if (isset($_SESSION['errors'])) {
-        $view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
-        unset($_SESSION['errors']);
-    }
+	$view->getEnvironment()->addGlobal('baseUrl', 'localhost:8080');
 
 	return $view;
 };

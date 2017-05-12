@@ -42,15 +42,13 @@ class UserController extends \App\Controllers\BaseController
                         $message->to($find['email']);
                         $message->subject('Active Your Account');
                 });
-                $data = $this->responseDetail("Register Success", 201, $find);
+                return $this->responseDetail("Register Success", 201, $find);
             } else {
-                $data = $this->responseDetail($addUser . " already used", 400);
+                return $this->responseDetail($addUser . " already used", 400);
             }
         }  else {
-            $data = $this->responseDetail("Error", 400, $this->validator->errors());
+            return $this->responseDetail("Error", 400, $this->validator->errors());
         }
-
-        return $data;
     }
 
     public function activeUser(Request $request, Response $response)
@@ -66,14 +64,12 @@ class UserController extends \App\Controllers\BaseController
 
             $user->update($update, 'id', $findUser['id']);
 
-            $data = $this->responseDetail("Verification Success", 200);
+            return $this->responseDetail("Verification Success", 200);
         } elseif ($findUser && $findUser['is_active'] == 1) {
-            $data = $this->responseDetail("You account is verified", 400);
+            return $this->responseDetail("You account is verified", 400);
         } else {
-            $data = $this->responseDetail("Data Not Found", 404);
+            return $this->responseDetail("Data Not Found", 404);
         }
-
-        return $data;
     }
 
     public function login(Request $request, Response $response)
@@ -92,6 +88,10 @@ class UserController extends \App\Controllers\BaseController
 
                 $getToken = $token->setToken($login['id']);
 
+                if (is_int($getToken)) {
+                    $getToken = $token->find('id', $getToken);
+                }
+
                 $role = new \App\Models\Users\UserRole;
                 $findRole = $role->find('user_id', $getToken['user_id'])->fetch();
 
@@ -100,13 +100,11 @@ class UserController extends \App\Controllers\BaseController
                     'role'  => $findRole['role_id'],
                 ];
 
-                $data = $this->responseDetail("Login Success", 200, $login, $key);
+                return $this->responseDetail("Login Success", 200, $login, $key);
             } else {
-                $data = $this->responseDetail("Error", 401, "Wrong Password");
+                return $this->responseDetail("Error", 401, "Wrong Password");
             }
         }
-
-        return $data;
     }
 
     public function passwordReset(Request $request, Response $response)
@@ -144,13 +142,11 @@ class UserController extends \App\Controllers\BaseController
                         $message->subject('Reset your password');
                 });
 
-                $data = $this->responseDetail("Check your email for reset password", 201);
+                return $this->responseDetail("Check your email for reset password", 201);
             }
         } else {
-            $data = $this->responseDetail("Error", 400, $this->validator->errors());
+            return $this->responseDetail("Error", 400, $this->validator->errors());
         }
-
-        return $data;
     }
 
     public function getReNewPassword(Request $request, Response $response)
@@ -162,12 +158,10 @@ class UserController extends \App\Controllers\BaseController
         $find = $pass->find('token', $token)->fetch();
 
         if ($find) {
-            $data = $this->responseDetail("Success Get Token", 200);
+            return $this->responseDetail("Success Get Token", 200);
         } else {
-            $data = $this->responseDetail("Data Not Found", 404);
+            return $this->responseDetail("Data Not Found", 404);
         }
-
-        return $data;
     }
 
     public function postReNewPassword(Request $request, Response $response)
@@ -201,12 +195,12 @@ class UserController extends \App\Controllers\BaseController
             
             $updatePassword = $user->resetPassword($req, 'id', $findUserId['user_id']);
 
-            $data = $this->responseDetail('Success Update Password', 200);
-        } else {
-            $data = $this->responseDetail('Error', 400, $this->validator->errors());
-        }
+            $passwordToken->hardDelete('token', $token);
 
-        return $data;
+            return $this->responseDetail('Success Update Password', 200);
+        } else {
+            return $this->responseDetail('Error', 400, $this->validator->errors());
+        }
     }
 }
 
