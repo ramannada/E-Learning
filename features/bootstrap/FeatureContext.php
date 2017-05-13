@@ -365,9 +365,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $options = $this->setOptions($query, $json);
 
         try {
-
-            $token = $this->paramContext->token;
-
             $this->_response = $this->_client
                                     ->request($this->_request['method'], $this->_request['url'], $options);
         } catch (Exception $exception) {

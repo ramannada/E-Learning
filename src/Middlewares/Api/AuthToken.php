@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class AuthToken extends \App\Middlewares\BaseMiddleware
 {
-
 	public function __invoke(Request $request, Response $response, $next)
 	{
 		$whiteList = ['/', 'api/register', 'api/login', 'api/active'];
@@ -33,5 +32,4 @@ class AuthToken extends \App\Middlewares\BaseMiddleware
 		
 		return $response;
 	}
-
 }
