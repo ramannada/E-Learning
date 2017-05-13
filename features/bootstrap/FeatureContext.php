@@ -396,28 +396,4 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             }
         }
     }
-
-    /**
-     * @When I active user with email :email
-     */
-    public function iActiveUserWithEmail($email)
-    {
-        $this->dbConnect()->query("UPDATE users SET is_active = 1 where email = '$email'");
-    }
-
-     /**
-     * @When I delete user with email :email
-     */
-    public function iDeleteUserWithEmail($email)
-    {
-        $this->dbConnect()->query("DELETE FROM users where email = '$email'");
-    }
-
-    /**
-     * @When I delete token
-     */
-    public function iDeleteTokenPasswordReset()
-    {
-        $this->dbConnect()->query("DELETE FROM password_reset");
-    }
 }
