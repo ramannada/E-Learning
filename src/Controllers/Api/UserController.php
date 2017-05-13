@@ -113,28 +113,16 @@ class UserController extends \App\Controllers\BaseController
         return $data;
     }
 
-    public function setRoleAdminCourse(Request $request, Response $response, $args)
+    public function getAllUser(Request $request, Response $response)
     {
-        foreach ($request->getParam('user_id') as $key => $value) {
-            $user = new \App\Models\Users\UserRole;
-            $update = ['role_id' => 2];
-            $setRole = $user->update($update, 'user_id', $value);
-        }
+        $user = new \App\Models\Users\User;
 
-        $data = $this->responseDetail('Success change role', 200);
+        $find = $user->joinUserAndRole();
 
-        return $data;
-    }
-
-    public function getUserByRole(Request $request, Response $response, $args)
-    {
-        $user = new \App\Models\Users\UserRole;
-        $find = $user->find('role_id', $args['role_id'])->fetchAll();
-
-        if (!$find) {
-            $data = $this->responseDetail('Error', 404, 'No user found');
+        if ($find) {
+            $data = $this->responseDetail('Found user', 200, $find);
         } else {
-            $data = $this->responseDetail(null, 200, $find);
+            $data = $this->responseDetail('Error', 404, 'No user found');
         }
 
         return $data;
