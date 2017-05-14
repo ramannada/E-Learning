@@ -40,7 +40,7 @@ class ArticleCategory extends \App\Models\BaseModel
 
         if ($diffA) {
             foreach ($diffA as $key => $value) {
-                $this->delete('category_id', $value);
+                $this->hardDelete('category_id', $value);
             }
         }
 

@@ -75,6 +75,10 @@ abstract class BaseModel
         	'data'		=> $data,
         ];
 
+        if (empty($result['data'])) {
+            return false;
+        }
+
         return $result;
     }
 
@@ -126,6 +130,14 @@ abstract class BaseModel
 		return $this;
 	}
 
+    //find data with delete = 1
+    public function withDelete()
+    {
+        $this->query = $this->query->andWhere('deleted = 1');
+
+        return $this;
+    }
+
 	/**
 	 * Create New Data
 	 * @param  array  $data column and value
@@ -159,7 +171,6 @@ abstract class BaseModel
     {
     	$columns = [];
         $paramData = [];
-        $data[$column] = $value;
 
         $qb = $this->getBuilder();
         $qb->update($this->table);
@@ -170,6 +181,7 @@ abstract class BaseModel
             $qb->set($key, $columns[$key]);
 
         }
+        $paramData[$column] = $value;
         $qb->where( $column.'='. ':'.$column)
            ->setParameters($paramData)
            ->execute();

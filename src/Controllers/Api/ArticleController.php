@@ -7,7 +7,57 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 class ArticleController extends \App\Controllers\BaseController
 {
-	public function createArticle(Request $request, Response $response)
+    public function showAll(Request $request, Response $response)
+    {
+        $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+
+        $article = new \App\Models\Articles\Article;
+        $allArticle = $article->getAllJoin($page, 1);
+
+        if (!$allArticle) {
+            return $this->responseDetail("Article is empty", 404);
+        }
+
+        return $this->responseDetail("Data Available", 200, $allArticle);
+    }
+
+    public function showByIdUser(Request $request, Response $response)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+
+        $userToken = new \App\Models\Users\UserToken;
+        $userId = $userToken->find('token', $token)->fetch()['user_id'];
+
+        $article = new \App\Models\Articles\Article;
+        $findArticle = $article->getArticleByUserId($userId, $page, 5);
+
+        if (!$findArticle) {
+            return $this->responseDetail("You not have articles", 404);
+        }
+
+        return $this->responseDetail("Data Available", 200, $findArticle);
+    }
+
+    public function showTrashByIdUser(Request $request, Response $response)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $userToken = new \App\Models\Users\UserToken;
+        $userId = $userToken->find('token', $token)->fetch()['user_id'];
+
+        $article = new \App\Models\Articles\Article;
+        $findArticle = $article->getTrashByUserId($userId);
+
+        if (!$findArticle) {
+            return $this->responseDetail("You not have trash", 404);
+        }
+
+        return $this->responseDetail("Data Available", 200, $findArticle);
+    }
+
+	public function create(Request $request, Response $response)
 	{
 		$post = $request->getParams();
 
@@ -52,34 +102,60 @@ class ArticleController extends \App\Controllers\BaseController
         }
 	}
 
-    public function getUpdateArticle(Request $request, Response $response, $args)
+    private function validateUser($token, $article)
     {
-        $token = $request->getHeader('Authorization')[0];
-
         $userToken = new \App\Models\Users\UserToken;
         $userId = $userToken->find('token', $token)->fetch()['user_id'];
 
-        $article = new \App\Models\Articles\Article;
-        $getArticle = $article->getUpdateArticle($args['slug']);
-        
-        if ($userId != $getArticle['user_id']) {
-            return $this->responseDetail("You have not Authorized to edit this article", 401);
+        $role = new \App\Models\Users\UserRole;
+        $roleUser = $role->find('user_id', $userId)->fetch()['role_id'];
+
+        if ($userId != $article['user_id'] && $roleUser > 1) {
+            return false;
         }
 
+        return true;
+    }
+
+    private function checkArticle($article)
+    {
+        if (!$article) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getUpdate(Request $request, Response $response, $args)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $article = new \App\Models\Articles\Article;
+        $getArticle = $article->getEdit($args['slug']);
+
+        $validateUser = $this->validateUser($token, $getArticle);
+
+        if (!$this->checkArticle($getArticle)) {
+            return $this->responseDetail("Data Not Found", 404);
+        } elseif (!$validateUser) {
+            return $this->responseDetail("You have not Authorized to edit this article", 401);
+        }
+        
         return $this->responseDetail("Data Available", 200, $getArticle);
     }
 
-    public function putUpdateArticle(Request $request, Response $response, $args)
+    public function putUpdate(Request $request, Response $response, $args)
     {
         $token = $request->getHeader('Authorization')[0];
 
-        $userToken = new \App\Models\Users\UserToken;
-        $userId = $userToken->find('token', $token)->fetch()['user_id'];
-
         $article = new \App\Models\Articles\Article;
-        $getArticle = $article->getUpdateArticle($args['slug']);
+        $getArticle = $article->getEdit($args['slug']);
         
-        if ($userId != $getArticle['user_id']) {
+        $validateUser = $this->validateUser($token, $getArticle);
+
+        if (!$this->checkArticle($getArticle)) {
+            return $this->responseDetail("Data Not Found", 400);
+        } elseif (!$validateUser) {
             return $this->responseDetail("You have not Authorized to edit this article", 401);
         }
 
@@ -119,4 +195,62 @@ class ArticleController extends \App\Controllers\BaseController
         }
     }
 
+    public function softDelete(Request $request, Response $response, $args)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $article = new \App\Models\Articles\Article;
+        $findArticle = $article->find('title_slug', $args['slug'])->withoutDelete()->fetch();
+        
+        $validateUser = $this->validateUser($token, $findArticle);
+
+        if (!$this->checkArticle($findArticle)) {
+            return $this->responseDetail("Data Not Found", 400);
+        } elseif (!$validateUser) {
+            return $this->responseDetail("You have not Authorized to edit this article", 401);
+        }
+
+        $article->softDelete('id', $findArticle['id']);
+        return $this->responseDetail("$findArticle['title'] is set to trash", 200);
+
+    }
+
+    public function restore(Request $request, Response $response, $args)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $article = new \App\Models\Articles\Article;
+        $findArticle = $article->find('title_slug', $args['slug'])->fetch();
+
+        $validateUser = $this->validateUser($token, $findArticle);
+
+        if (!$this->checkArticle($findArticle)) {
+            return $this->responseDetail("Data Not Found", 400);
+        } elseif (!$validateUser) {
+            return $this->responseDetail("You have not Authorized to edit this article", 401);
+        }
+
+        $article->softDelete('id', $findArticle['id']);
+        return $this->responseDetail("$findArticle['title'] is restored", 200);
+    }
+
+    public function hardDelete(Request $request, Response $response, $args)
+    {
+        $token = $request->getHeader('Authorization')[0];
+
+        $article = new \App\Models\Articles\Article;
+        $findArticle = $article->find('title_slug', $args['slug'])->fetch();
+        
+        $validateUser = $this->validateUser($token, $findArticle);
+
+        if (!$this->checkArticle($findArticle)) {
+            return $this->responseDetail("Data Not Found", 400);
+        } elseif (!$validateUser) {
+            return $this->responseDetail("You have not Authorized to edit this article", 401);
+        }
+
+        $article->hardDelete('id', $findArticle['id']);
+        return $this->responseDetail("$findArticle['title'] is permanently removed", 200);
+
+    }
 }
