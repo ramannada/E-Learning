@@ -21,6 +21,15 @@ class User extends \App\Models\BaseModel
 
         return $this->checkOrCreate($data);
     }
+
+    public function resetPassword(array $data, $column, $value)
+    {
+        $data = [
+            'password' => password_hash($data['password_hash'], PASSWORD_DEFAULT),
+        ];
+
+        return $this->updateOrCreate($data, $column, $value);
+    }
 }
 
 ?>

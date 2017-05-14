@@ -47,7 +47,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-    
+
         $this->paramContext = $environment->getContext('ParamContext');
     }
 
@@ -377,7 +377,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iSeeTheResult()
     {
         echo $this->_response->getBody();
-    }    
+    }
 
     /**
      * @getException Error
@@ -387,7 +387,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $getResponse = $exception->getResponse();
 
         $data =  json_decode($getResponse->getBody()->getContents());
- 
+        
         if (!($data->status == 200)) {
             if (!empty($data->data)) {
                 throw new Exception($data->data);
@@ -396,5 +396,4 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             }
         }
     }
-
 }
