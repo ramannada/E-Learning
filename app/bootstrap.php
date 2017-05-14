@@ -11,4 +11,5 @@ $app = new App([
 	]);
 
 require __DIR__. '/containers.php';
+require __DIR__. '/middlewares.php';
 require __DIR__. '/routes.php';

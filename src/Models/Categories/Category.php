@@ -11,7 +11,7 @@ class Category extends \App\Models\BaseModel
     {
         foreach ($data as $key => $value) {
             $find = $this->find('name', ucwords($value))->fetch();
-            if (!$find && !in_array($value, $find)) {
+            if (!$find) {
                 $create['name'] = ucwords($value);
                 $category[$value] = $this->create($create);
             } elseif ($find) {
