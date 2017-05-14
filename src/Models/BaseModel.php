@@ -138,12 +138,12 @@ abstract class BaseModel
         return $this;
     }
 
-    /**
-     * Create New Data
-     * @param  array  $data column and value
-     * @return int id rows
-     */
-    public function create(array $data)
+	/**
+	 * Create New Data
+	 * @param  array  $data column and value
+	 * @return int id rows
+	 */
+	public function create(array $data)
     {
         $column = [];
         $paramData = [];

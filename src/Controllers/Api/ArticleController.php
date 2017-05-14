@@ -211,8 +211,8 @@ class ArticleController extends \App\Controllers\BaseController
         }
 
         $article->softDelete('id', $findArticle['id']);
-        return $this->responseDetail($findArticle['title']. 'is set to trash', 200);
 
+        return $this->responseDetail($findArticle['title']. 'is set to trash', 200);
     }
 
     public function restore(Request $request, Response $response, $args)
@@ -231,6 +231,7 @@ class ArticleController extends \App\Controllers\BaseController
         }
 
         $article->softDelete('id', $findArticle['id']);
+
         return $this->responseDetail($findArticle['title'] .'is restored', 200);
     }
 
@@ -250,7 +251,7 @@ class ArticleController extends \App\Controllers\BaseController
         }
 
         $article->hardDelete('id', $findArticle['id']);
-        return $this->responseDetail($findArticle['title']. 'is permanently removed', 200);
 
+        return $this->responseDetail($findArticle['title']. 'is permanently removed', 200);
     }
 }
