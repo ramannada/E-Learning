@@ -16,11 +16,7 @@ class UserToken extends \App\Models\BaseModel
             'expire_at' =>  date('Y-m-d H:i:s', strtotime('+2 day')),
         ];
 
-        $now = date('Y-m-d H:i:s', strtotime('now'));
-
-        $this->updateOrCreate($data);
-
-        return $data;
+        return $this->updateOrCreate($data);
     }
 }
 

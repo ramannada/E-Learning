@@ -40,6 +40,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct(array $parameters)
     {
         $this->_parameters = $parameters;
+
         $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
     }
 
@@ -386,13 +387,13 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $getResponse = $exception->getResponse();
 
-        $data =  json_decode($getResponse->getBody()->getContents());
-        
+        $data = json_decode($getResponse->getBody()->getContents());
+
         if (!($data->status == 200)) {
             if (!empty($data->data)) {
                 throw new Exception($data->data);
             } else {
-                throw new Exception($data->message);
+                throw new Exception($data);
             }
         }
     }

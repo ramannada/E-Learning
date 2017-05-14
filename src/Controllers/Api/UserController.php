@@ -89,7 +89,7 @@ class UserController extends \App\Controllers\BaseController
                 $getToken = $token->setToken($login['id']);
 
                 if (is_int($getToken)) {
-                    $getToken = $token->find('id', $getToken);
+                    $getToken = $token->find('id', $getToken)->fetch();
                 }
 
                 $role = new \App\Models\Users\UserRole;
@@ -183,7 +183,6 @@ class UserController extends \App\Controllers\BaseController
         ];
 
         $this->validator->rules($rule);
-
         if ($this->validator->validate()) {
             $passwordToken = new \App\Models\Users\PasswordReset;
 
@@ -202,6 +201,100 @@ class UserController extends \App\Controllers\BaseController
             return $this->responseDetail('Error', 400, $this->validator->errors());
         }
     }
-}
 
-?>
+    public function getEditProfile(Request $request, Response $response, $args)
+    {
+        $user = new \App\Models\Users\User;
+
+        $findUser = $user->find('id', $args['id'])->fetch();
+
+        if (!$findUser) {
+            return $this->responseDetail("Data Not Found", 404);
+        }
+
+        $data = [
+            'name'  => $findUser['name'],
+            'email' => $findUser['email'],
+            'photo' => $findUser['photo'],
+        ];
+
+        return $this->responseDetail("Data Available", 200, $data);
+    }
+
+    public function putEditProfile(Request $request, Response $response, $args)
+    {
+        $post = $request->getParams();
+
+        $rule = [
+            'required' => [
+                ['name'],
+                ['email'],
+            ],
+            'email' => [
+                ['email'],
+            ],
+        ];
+
+        $this->validator->rules($rule);
+
+        if ($this->validator->validate()) {
+
+            $user = new \App\Models\Users\User;
+
+            $findUser = $user->find('id', $args['id'])->fetch();
+
+            if (!$findUser) {
+                return $this->responseDetail("Data Not Found", 404);
+            }
+
+            if ($findUser['email'] === $request->getParam('email')) {
+                unset($post['email']);
+            }
+
+            if ($request->getUploadedFiles()) {
+                $file = new \Upload\File('photo', $this->upload);
+
+                $file->setName(uniqid());
+
+                $file->addValidations(array(
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                        'image/jpg', 'image/jpeg')),
+                        new \Upload\Validation\Size('5M')));
+
+                $photo = $file->getNameWithExtension();
+
+                try {
+
+                    $file->upload();
+
+                    if ($findUser['photo'] != 'default_user.png') {
+                        unlink('upload/'.$findUser['photo']);
+                    }
+
+                } catch (\Exception $e) {
+                    $errors = $file->getErrors();
+
+                    return $this->responseDetail("Error", 400, $errors);
+                }
+            }
+
+            $update = $user->updateProfile($post, $findUser['id'], $photo);
+
+            if (is_array($update)) {
+
+                return $this->responseDetail("Update Success", 200, $update);
+
+                if ($findUser['email'] != $request->getParam('email')) {
+                    $this->mailer->send('templates/mailer/update.twig', ['user' => $update], function($message) use ($findUser) {
+                        $message->to($findUser['email']);
+                        $message->subject('Profile Update');
+                    });
+                }
+            } else {
+                return $this->responseDetail($update . " already used", 400);
+            }
+        } else {
+            return $this->responseDetail("Error", 400, $this->validator->errors());
+        }
+    }
+}

@@ -44,7 +44,7 @@ class UserContext implements Context
     	   ->execute();
     }
 
-     /**
+    /**
      * @Given information about user with username :username
      */
     public function getUser($username)

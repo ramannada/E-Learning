@@ -8,6 +8,7 @@ default:
                 - ParamContext
                 - UserContext
                 - ResetPasswordContext
+                - TokenContext
 
     extensions:
         Behat\MinkExtension:

@@ -92,7 +92,11 @@ class UserController extends \App\Controllers\BaseController
             $login = $this->testing->request('POST', $this->router->pathFor('api.user.login'),['json' => $body]);
 
             if ($login->getStatusCode() == 200) {
-                $_SESSION['login'] = json_decode($login->getBody()->getContents())->data;
+                $contents = json_decode($login->getBody()->getContents(), true);
+                $_SESSION['login'] = [
+                    'data'  => $contents['data'],
+                    'meta'  => $contents['meta'],
+                ];
 
                 $resp = $response->withRedirect($this->router->pathFor('web.home'));
 
