@@ -4,48 +4,48 @@ namespace App\Models;
 
 abstract class BaseModel
 {
-	protected $table;
-	protected $column;
-	protected $db;
-	protected $query;
+    protected $table;
+    protected $column;
+    protected $db;
+    protected $query;
     protected $check; //column you want to check
 
-	public function __construct($db = null)
-	{
-		$this->db = $db;
-		$this->query = null;
-	}
+    public function __construct($db = null)
+    {
+        $this->db = $db;
+        $this->query = null;
+    }
 
-	protected function setDb()
-	{
-		global $container;
+    protected function setDb()
+    {
+        global $container;
 
-		$this->db = $container['db'];
-	}
+        $this->db = $container['db'];
+    }
 
-	protected function getBuilder()
-	{
-		if ($this->db == null) {
-			$this->setDb();
-		}
-		return $this->db->createQueryBuilder();
-	}
+    protected function getBuilder()
+    {
+        if ($this->db == null) {
+            $this->setDb();
+        }
+        return $this->db->createQueryBuilder();
+    }
 
-	public function getAll()
-	{
-		$qb = $this->getBuilder();
-		$this->query = $qb->select($this->column)
-						  ->from($this->table);
-		return $this;
-	}
+    public function getAll()
+    {
+        $qb = $this->getBuilder();
+        $this->query = $qb->select($this->column)
+                          ->from($this->table);
+        return $this;
+    }
 
-	/**
-	 * Paginate Query
-	 * @param  int $page  page
-	 * @param  int $limit data per page
-	 * @return array data paginate
-	 */
-	public function paginate(int $page, int $limit)
+    /**
+     * Paginate Query
+     * @param  int $page  page
+     * @param  int $limit data per page
+     * @return array data paginate
+     */
+    public function paginate(int $page, int $limit)
     {
         //count total custom query
         $total = count($this->fetchAll());
@@ -68,11 +68,11 @@ abstract class BaseModel
         $data = $this->fetchAll();
 
         $result = [
-        	'total_data'=> $total,
-        	'perpage'	=> $limit,
-        	'current'	=> $page,
-        	'total_page'=> $pages,
-        	'data'		=> $data,
+            'total_data'=> $total,
+            'perpage'   => $limit,
+            'current'   => $page,
+            'total_page'=> $pages,
+            'data'      => $data,
         ];
 
         if (empty($result['data'])) {
@@ -91,10 +91,10 @@ abstract class BaseModel
      */
     public function find($column, $value = null, $operator = '=')
     {
-    	$param = ':'.$column;
-    	$qb = $this->getBuilder();
-    	$this->query = $qb->select($this->column)
-    	   			 ->from($this->table);
+        $param = ':'.$column;
+        $qb = $this->getBuilder();
+        $this->query = $qb->select($this->column)
+                     ->from($this->table);
         if (is_array($column)) {
             foreach ($column as $key => $value) {
                 if (is_numeric($key) && is_array($value)) {
@@ -109,7 +109,7 @@ abstract class BaseModel
             $qb->where($column.$operator.$param)
                ->setParameter($param, $value);
         }
-    	return $this;
+        return $this;
     }
 
     public function fetchAll()
@@ -138,12 +138,12 @@ abstract class BaseModel
         return $this;
     }
 
-	/**
-	 * Create New Data
-	 * @param  array  $data column and value
-	 * @return int id rows
-	 */
-	public function create(array $data)
+    /**
+     * Create New Data
+     * @param  array  $data column and value
+     * @return int id rows
+     */
+    public function create(array $data)
     {
         $column = [];
         $paramData = [];
@@ -157,7 +157,7 @@ abstract class BaseModel
            ->setParameters($paramData)
            ->execute();
 
-        return (int)$this->db->lastInsertId();
+        return (int) $this->db->lastInsertId();
     }
 
     /**
@@ -169,7 +169,7 @@ abstract class BaseModel
      */
     public function update(array $data, $column, $value)
     {
-    	$columns = [];
+        $columns = [];
         $paramData = [];
 
         $qb = $this->getBuilder();
@@ -190,39 +190,39 @@ abstract class BaseModel
     //set deleted to 1
     public function softDelete($column, $value)
     {
-    	$param = ':'.$column;
+        $param = ':'.$column;
 
-    	$qb = $this->getBuilder();
-    	$qb->update($this->table)
-    	   ->set('deleted', 1)
-    	   ->where($column.'='. $param)
-    	   ->setParameter($param, $value)
-    	   ->execute();
+        $qb = $this->getBuilder();
+        $qb->update($this->table)
+           ->set('deleted', 1)
+           ->where($column.'='. $param)
+           ->setParameter($param, $value)
+           ->execute();
     }
 
     //delete from db
     public function hardDelete($column, $value)
     {
-    	$param = ':'.$column;
+        $param = ':'.$column;
 
-    	$qb = $this->getBuilder();
-    	$qb->delete($this->table)
-    	   ->where($column.'='. $param)
-    	   ->setParameter($param, $value)
-    	   ->execute();
+        $qb = $this->getBuilder();
+        $qb->delete($this->table)
+           ->where($column.'='. $param)
+           ->setParameter($param, $value)
+           ->execute();
     }
 
     //set deleted to 0
     public function restore($column, $value)
     {
-    	$param = ':'.$column;
+        $param = ':'.$column;
 
-    	$qb = $this->getBuilder();
-    	$qb->update($this->table)
-    	   ->set('deleted', 0)
-    	   ->where($column.'='. $param)
-    	   ->setParameter($param, $value)
-    	   ->execute();
+        $qb = $this->getBuilder();
+        $qb->update($this->table)
+           ->set('deleted', 0)
+           ->where($column.'='. $param)
+           ->setParameter($param, $value)
+           ->execute();
     }
 
     /**
@@ -272,7 +272,7 @@ abstract class BaseModel
 
         if ($check) {
             $this->update($data, 'id', $check['id']);
-            return $this->find('id', $check['id'])->fetch();  
+            return $this->find('id', $check['id'])->fetch();
         } else {
             return $this->create($data);
         }

@@ -35,6 +35,8 @@ $container['view'] = function (Container $container) {
 
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
+	$view->getEnvironment()->addGlobal('baseUrl', 'localhost:8080');
+
 	return $view;
 };
 
