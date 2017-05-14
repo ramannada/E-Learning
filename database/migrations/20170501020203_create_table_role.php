@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateSampleTable extends AbstractMigration
+class CreateTableRole extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,8 +27,8 @@ class CreateSampleTable extends AbstractMigration
      */
     public function change()
     {
-        $test = $this->table('test');
-        $test->addColumn('test', 'string')
+        $data = $this->table('role');
+        $data->addColumn('name', 'string')
              ->create();
     }
 }

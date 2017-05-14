@@ -28,6 +28,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     protected $_response;
     public $_body;
     protected $paramContext;
+    public $db;
 
     /**
      * Initializes context.
@@ -376,14 +377,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iSeeTheResult()
     {
         echo $this->_response->getBody();
-    }
-    
+    }    
+
     /**
      * @getException Error
      */
     public function getException($exception)
     {
         $getResponse = $exception->getResponse();
+
         $data =  json_decode($getResponse->getBody()->getContents());
  
         if (!($data->status == 200)) {
@@ -394,4 +396,5 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             }
         }
     }
+
 }

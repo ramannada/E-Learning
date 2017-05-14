@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class SampleSeeder extends AbstractSeed
+class Role extends AbstractSeed
 {
     /**
      * Run Method.
@@ -14,10 +14,10 @@ class SampleSeeder extends AbstractSeed
      */
     public function run()
     {
-        $data = [
-            'test'  => 'test',
-        ];
+        $data[] = ['name' => 'Super Admin'];
+        $data[] = ['name' => 'Admin Courses'];
+        $data[] = ['name' => 'User'];
 
-        $this->insert('test', $data);
+        $this->insert('role', $data);
     }
 }
