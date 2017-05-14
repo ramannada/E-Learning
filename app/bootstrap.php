@@ -12,4 +12,5 @@ $app = new App([
 
 require __DIR__. '/containers.php';
 require __DIR__. '/middlewares.php';
-require __DIR__. '/routes.php';
+require __DIR__. '/apiRoute.php';
+require __DIR__. '/webRoute.php';
