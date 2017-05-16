@@ -7,10 +7,10 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 class UserContext implements Context
 {
-	public $featureContext;
-	public $paramContext;
+    public $featureContext;
+    public $paramContext;
 
-	 /** @BeforeScenario */
+     /** @BeforeScenario */
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
@@ -24,12 +24,12 @@ class UserContext implements Context
      */
     public function verifyEmail($email)
     {
-    	$qb = $this->featureContext->getBuilder();
-    	$qb->update('users')
-    	   ->set('is_active', 1)
-    	   ->where("email = :email")
-    	   ->setParameter(':email', $email)
-    	   ->execute();
+        $qb = $this->featureContext->getBuilder();
+        $qb->update('users')
+           ->set('is_active', 1)
+           ->where("email = :email")
+           ->setParameter(':email', $email)
+           ->execute();
     }
 
     /**
@@ -37,11 +37,11 @@ class UserContext implements Context
      */
     public function deleteUser($username)
     {
-    	$qb = $this->featureContext->getBuilder();
-    	$qb->delete('users')
-    	   ->where("username = :username")
-    	   ->setParameter(':username', $username)
-    	   ->execute();
+        $qb = $this->featureContext->getBuilder();
+        $qb->delete('users')
+           ->where("username = :username")
+           ->setParameter(':username', $username)
+           ->execute();
     }
 
     /**
