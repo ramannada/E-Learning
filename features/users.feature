@@ -26,6 +26,14 @@ Feature: Users
     	| testbehat@gmail.com | Test Behat Edit |
     	Then I store it
 
+    Scenario: Change Password
+        Given token with username "testbehat"
+        When I "PUT" in "api/change_password"
+        And I fill post with this:
+        | old_password | new_password    | retype_password |
+        | testbehat    | testchangebehat | testchangebehat |
+        Then I store it
+
     Scenario: Request Reset Password
     	When I "POST" in "api/password_reset"
     	And I fill post with this:
