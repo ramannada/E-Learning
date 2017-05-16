@@ -7,8 +7,6 @@ default:
                         base_url: http://php/public/
                 - ParamContext
                 - UserContext
-                - ResetPasswordContext
-                - TokenContext
 
     extensions:
         Behat\MinkExtension:
