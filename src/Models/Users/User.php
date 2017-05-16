@@ -21,6 +21,7 @@ class User extends \App\Models\BaseModel
 
         return $this->checkOrCreate($data);
     }
+
 }
 
 ?>

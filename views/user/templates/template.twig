@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    {% include 'user/partials/css.twig' %}
+    {% block css %} {% endblock %}
+    {% block javascripts %}
+     <script type="text/javascript">
+     $('document').ready(function() {
+         $('#search').keyup(function() {
+             var searched = $(this).val();
+             $('.searchable row label').hide();
+             $('.searchable row label').filter(function() {
+                 return $(this).text().match(new RegExp(searched, 'i'));
+             }).show();
+         });
+     });
+     </script>
+    {% endblock %}
+
+</head>
+    {% block content %} {% endblock %}
+</html>
+{% include 'user/partials/script.twig' %}
+{% block script %}{% endblock %}

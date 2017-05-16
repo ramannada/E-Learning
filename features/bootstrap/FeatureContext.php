@@ -47,6 +47,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
+<<<<<<< HEAD
     
         $this->paramContext = $environment->getContext('ParamContext');
     }
@@ -67,6 +68,10 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     {
         $this->setDb();
         return $this->db->createQueryBuilder();
+=======
+
+        $this->tokenContext = $environment->getContext('TokenContext');
+>>>>>>> origin/add_web_register_login_feature
     }
 
     public function setOptions($query = null, $json = null)
@@ -379,7 +384,47 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function iSeeTheResult()
     {
         echo $this->_response->getBody();
+<<<<<<< HEAD
     }    
+=======
+    }
+    /**
+     * @When I GET url :url by :param with :value
+     */
+    public function getBy($url, $param, $value)
+    {
+        $headers = [
+            'Content-type'  => 'application/json',
+            'Authorization' => $this->tokenContext->token,
+        ];
+        $query = [
+            $param  => $value,
+        ];
+        $options = [
+            'headers'   => $headers,
+            'query'     => $query,
+        ];
+
+        $this->_response = $this->_client->request('GET', $url, $options);
+    }
+
+    /**
+     * @seting database connect
+     */
+    public function dbConnect()
+    {
+        $file = json_decode(file_get_contents("config.json", 'r'), true);
+
+        $username = $file['user'];
+        $password = $file['pass'];
+        $hostname = 'mysql:host=' . $file['host'] ;
+        $database = 'dbname=' . $file['db'];
+        $port     = 'port=' . $file['port'];
+
+        $dbh = new PDO($hostname.';'.$database.';'.$port, $username, $password);
+        return $dbh;
+    }
+>>>>>>> origin/add_web_register_login_feature
 
     /**
      * @getException Error

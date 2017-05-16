@@ -1,0 +1,124 @@
+{% extends 'user/beforelogin/templates/template.twig' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+             <input type="text" name="search" class="form-control" id="search" placeholder="Add your options..">
+             <button type="submit" name="search" class="btn">Search</button>
+        </div>
+    </div>
+
+    <form  method="post" class="searchable" action="{{ path_for('web.user.post.add.admin') }}">
+        <div class="row">
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="1">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>ramannada</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="2">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>labib</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="3">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>muhajir</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="4">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>super</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+        </div>
+
+        <div class="row">
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="5">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>ramannada</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="6">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>labib</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox" autocomplete="off" name="id_user[]" value="7">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>muhajir</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+
+            <label class="btn btn-default col-sm-3" data-toggle="buttons">
+              <input type="checkbox"  autocomplete="off" name="id_user[]" value="8">
+              <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+              <h3>super</h3>
+              <p>Labib Muhajir</p>
+              <p>labibmuhajir@gmail.com</p>
+            </label>
+        </div>
+
+            <!-- </div> -->
+                <!-- <div data-toggle="button" class="btn btn-group">
+                    <input type="checkbox" name="" value="" class="checkbox regular-checkbox">
+                    <span class="checkbox checkbox- glyphicon glyphicon-ok glyphicon-lg"></span>
+                        <h3>ramannada</h3>
+                        <p>Labib Muhajir</p>
+                        <p>labibmuhajir@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="well">
+                <h3>ramannada</h3>
+                <p>Labib Muhajir</p>
+                <p>labibmuhajir@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="well">
+                <h3>ramannada</h3>
+                <p>Labib Muhajir</p>
+                <p>labibmuhajir@gmail.com</p>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="well">
+                <h3>ramannada</h3>
+                <p>Labib Muhajir</p>
+                <p>labibmuhajir@gmail.com</p>
+            </div>
+        </div> -->
+
+        <div class="panel-body" align="right">
+            <button type="submit">Change as Admin</button>
+        </div>
+    </form>
+
+
+
+{% endblock %}
