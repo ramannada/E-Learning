@@ -306,17 +306,35 @@ class UserController extends \App\Controllers\BaseController
         $users = new \App\Models\Users\User;
         $user = $users->find('id', $auth['user_id'])->fetch();
 
-        if ($request->getParam('newPassword') == $request->getParam('confirmPassword')) {
-            if (password_verify($request->getParam('password'), $user['password'])) {
-                $update = ['password' => $request->getParam('newPassword')];
+        $rule = [
+            'required' => [
+                ['old_password'],
+                ['new_password'],
+                ['retype_password'],
+            ],
+            'lengthMin' => [
+                ['old_password', 6],
+                ['new_password', 6],
+                ['retype_password', 6],
+            ],
+            'equals' => [
+                ['retype_password', 'new_password']
+            ],
+        ];
+
+        $this->validator->rules($rule);
+
+        if ($this->validator->validate()) {
+            if (password_verify($request->getParam('old_password'), $user['password'])) {
+                $update = ['password' => $request->getParam('new_password')];
                 $users->update($update, 'id', $user['id']);
 
-                return $this->responseDetail("Change password success", 200, $user);
+                return $this->responseDetail("Change password success", 200);
             } else {
-                return $this->responseDetail("Wrong password", 400);
+                return $this->responseDetail("Your Old Password is Wrong", 400);
             }
         } else {
-            return $this->responseDetail("New password and confirm password not same", 400);
+            return $this->responseDetail("Error", 400, $this->validator->errors());
         }
     }
 }
