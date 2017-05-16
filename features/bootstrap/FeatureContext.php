@@ -40,6 +40,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct(array $parameters)
     {
         $this->_parameters = $parameters;
+
         $this->_client = new Client(['base_uri' => $this->_parameters['base_url']]);
     }
 
@@ -47,7 +48,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function gatherContexts(BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-    
+
         $this->paramContext = $environment->getContext('ParamContext');
     }
 
@@ -76,137 +77,79 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
                 'Content-Type'  => 'application/json',
                 'Authorization' => $this->paramContext->token,
             ],
-            'query'     => $query,
-            'json'      => $json,
+            'query' => $query,
+            'json'  => $json,
         ];
         return $options;
 
     }
 
     /**
-     * @When I GET url :url
+     * @When /^I "(?<method>[^"]*)" in "(?<url>[^"]*)"?(?:| by column "(?<column>[^"]*)")?(?:| and)?(?:| with param:)$/
      */
-    public function iGetUrl($url)
+    public function iToUrl($method, $url, $column = null, TableNode $param = null)
     {
-        $options = $this->setOptions();
-        $this->_response = $this->_client->request('GET', $url, $options);
+        if ($method == "GET" || $method == "DELETE") {
+            $this->iShowData($method, $url, $column, $param);
+        } elseif ($method == "POST" || $method == "PUT") {
+            $this->iStoreData($method, $url, $column, $param);
+        }
     }
 
-    /**
-     * @When I GET url :url with param:
-     */
-    public function iGetUrlInParam($url, TableNode $table)
+    public function iShowData($method, $url, $column = null ,TableNode $param = null)
     {
-        foreach ($table as $key => $value) {
-            $query = $value;
+        if ($column != null) {
+            $url = $this->setArgument($url, $column);
         }
 
-        $options = $this->setOptions($query);
+        if ($param !== null) {
+            $query = $this->setQuery($param);
+            $options = $this->setOptions($query);
+        } else {
+            $options = $this->setOptions();
+        }
 
-        $this->_response = $this->_client->request('GET', $url, $options);
+        $this->_response = $this->_client->request($method, $url, $options);
+
     }
 
-    /**
-     * @When I GET url :url by column :column
-     */
-    public function iGetUrlByColumn($url, $column)
+    public function iStoreData($method, $url, $column = null, TableNode $param = null)
     {
-        $column = explode(',', $column);
+        if ($column !== null) {
+            $url = $this->setArgument($url, $column);
+        }
+
+        if ($param !== null) {
+            $query = $this->setQuery($param);
+            $options = $this->setOptions($query);
+        } else {
+            $options = $this->setOptions();
+        }
+
+        return $this->setRequest($method, $url, $options);
+    }
+
+    public function setArgument($url, $args)
+    {
+        $link = explode('/', $url);
+        $unlink = array_pop($link);
+
+        $column = explode(',', $args);
 
         foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
+            array_push($link, $this->paramContext->{$value});
         }
+        array_push($link, $unlink);
 
-        $url = $url. '/'. implode('/', $columns);
-
-        $options = $this->setOptions();
-
-        $this->_response = $this->_client->request('GET', $url, $options);
+        return implode('/',$link);
     }
 
-    /**
-     * @When I GET url :url by column :column and with param:
-     */
-    public function iGetUrlByColumnAndWithParam($url, $column, TableNode $table)
+    public function setQuery(TableNode $query)
     {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
+        foreach ($query as $key => $value) {
+            $param = $value;
         }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-
-        $this->_response = $this->_client->request('GET', $url, $options);
-    }
-
-    /**
-     * @When I DELETE url :url
-     */
-    public function iDeleteUrl($url)
-    {
-        $options = $this->setOptions();
-        $this->_response = $this->_client->request('DELETE', $url, $options);
-    }
-
-    /**
-     * @When I DELETE url :url with param:
-     */
-    public function iDeleteUrlInParam($url, TableNode $table)
-    {
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-
-        $this->_response = $this->_client->request('DELETE', $url, $options);
-    }
-
-    /**
-     * @When I DELETE url :url by column :column
-     */
-    public function iDeleteUrlByColumn($url, $column)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        $options = $this->setOptions();
-
-        $this->_response = $this->_client->request('DELETE', $url, $options);
-    }
-
-    /**
-     * @When I DELETE url :url by column :column and with param:
-     */
-    public function iDeleteUrlByColumnAndWithParam($url, $column, TableNode $table)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-
-        $this->_response = $this->_client->request('DELETE', $url, $options);
+        return $param;
     }
 
     public function setRequest($method, $url, $options = null)
@@ -219,141 +162,28 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     }
 
     /**
-     * @When I POST url :url
+     * @When I fill post with this:
      */
-    public function iPostUrl($url)
+    public function iFillWith(TableNode $table)
     {
-        $options = $this->setOptions();
-        return $this->setRequest('POST', $url, $options);
-    }
+        $t = $table->getHash();
 
-    /**
-     * @When I POST url :url with param:
-     */
-    public function iPostUrlWithParam($url, TableNode $table = null)
-    {
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
+        foreach ($t as $keyT => $valueT) {
+            foreach ($valueT as $keyValueT => $valueValueT) {
+                if ($valueValueT != "") {
+                    $this->_body[$keyValueT][] = $valueValueT;
+                }
+            }
+        }       
         
-        return $this->setRequest('POST', $url, $options);
+        foreach ($this->_body as $key => $value) {
+            if (count($this->_body[$key]) < 2) {
+                unset($this->_body[$key][0]);
+                $this->_body[$key] = $value[0];
+            }
+        }
     }
 
-    /**
-     * @When I POST url :url by column :column
-     */
-    public function iPostUrlByColumn($url, $column)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        $options = $this->setOptions();
-
-        return $this->setRequest('POST', $url, $options);
-    }
-
-    /**
-     * @When I POST url :url by column :column and with param:
-     */
-    public function iPostUrlByColumnAndWithParam($url, $column, TableNode $table)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-        return $this->setRequest('POST', $url, $options);
-    }
-
-    /**
-     * @When I PUT url :url
-     */
-    public function iPutUrl($url)
-    {
-        $options = $this->setOptions();
-        return $this->setRequest('PUT', $url, $options);
-    }
-
-    /**
-     * @When I PUT url :url with param:
-     */
-    public function iPutUrlWithParam($url, TableNode $table = null)
-    {
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-        
-        return $this->setRequest('PUT', $url, $options);
-    }
-
-    /**
-     * @When I PUT url :url by column :column
-     */
-    public function iPutUrlByColumn($url, $column)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        $options = $this->setOptions();
-
-        return $this->setRequest('PUT', $url, $options);
-    }
-
-    /**
-     * @When I PUT url :url by column :column and with param:
-     */
-    public function iPutUrlByColumnAndWithParam($url, $column, TableNode $table)
-    {
-        $column = explode(',', $column);
-
-        foreach ($column as $key => $value) {
-            $columns[$value] = $this->paramContext->{$value};
-        }
-
-        $url = $url. '/'. implode('/', $columns);
-
-        foreach ($table as $key => $value) {
-            $query = $value;
-        }
-
-        $options = $this->setOptions($query);
-        return $this->setRequest('PUT', $url, $options);
-    }
-
-    /**
-     * @When I fill :name with :value
-     */
-    public function iFillWith($name, $value)
-    {
-        if ($value == 'random_username') {
-            $value = md5(openssl_random_pseudo_bytes(12));
-        } elseif ($value == 'random_email') {
-            $value = md5(openssl_random_pseudo_bytes(12)). '@gmail.com';
-        }
-        $this->_body[$name] = $value;
-    }
     /**
      * @Then I store it
      */
@@ -364,8 +194,6 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $options = $this->setOptions($query, $json);
 
         try {
-            $body = json_encode($this->_body);
-
             $this->_response = $this->_client
                                     ->request($this->_request['method'], $this->_request['url'], $options);
         } catch (Exception $exception) {
@@ -374,36 +202,39 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     }
 
     /**
-     * @Then I see the result
-     */
-    public function iSeeTheResult()
-    {
-        echo $this->_response->getBody();
-    }    
-
-    /**
      * @getException Error
      */
     public function getException($exception)
     {
         $getResponse = $exception->getResponse();
 
-        $data =  json_decode($getResponse->getBody()->getContents());
- 
+        $data = json_decode($getResponse->getBody()->getContents());
+
         if (!($data->status == 200)) {
             if (!empty($data->data)) {
                 throw new Exception($data->data);
             } else {
-                throw new Exception($data->message);
+                throw new Exception($data);
             }
         }
     }
 
     /**
-     * @When I set timestamps
+     * @Given information about :table by :column :value 
      */
-    public function aa()
+    public function getData($table, $column, $value)
     {
-        echo date('Y-m-d H:i:s');
+        $qb = $this->getBuilder();
+
+        $result = $qb->select('*')
+                     ->from($table)
+                     ->where($column. ' = :'.$column)
+                     ->setParameter(':'.$column, $value)
+                     ->execute()
+                     ->fetch();
+
+        foreach ($result as $key => $value) {
+            $this->paramContext->{$key} = $value;
+        }
     }
 }

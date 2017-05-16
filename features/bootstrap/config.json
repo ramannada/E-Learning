@@ -1,7 +1,0 @@
-{
-    "host" : "172.17.0.1",
-    "user" : "root",
-    "pass" : "root",
-    "port" : "3366",
-    "db"   : "e-learning"
-}

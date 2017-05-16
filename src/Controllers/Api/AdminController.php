@@ -2,12 +2,27 @@
 
 namespace App\Controllers\Api;
 
-/**
-* 
-*/
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
 class AdminController extends \App\Controllers\BaseController
 {
-    public function addAdminCourse(Request $request, Response $response, $args)
+    public function getAddAdminCourse(Request $request, Response $response)
+    {
+        $user = new \App\Models\Users\User;
+
+        $find = $user->joinUserAndRole();
+
+        if ($find) {
+            $data = $this->responseDetail('Data Available', 200, $find);
+        } else {
+            $data = $this->responseDetail('Data Not Found', 404);
+        }
+
+        return $data;
+    }
+
+    public function putAddAdminCourse(Request $request, Response $response, $args)
     {
         foreach ($request->getParam('user_id') as $key => $value) {
             $user = new \App\Models\Users\UserRole;
@@ -15,8 +30,6 @@ class AdminController extends \App\Controllers\BaseController
             $setRole = $user->update($update, 'user_id', $value);
         }
 
-        $data = $this->responseDetail('Success change role', 200);
-
-        return $data;
+        return $this->responseDetail('Success Add Admin Course', 200);
     }
 }
