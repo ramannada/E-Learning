@@ -17,8 +17,47 @@ Feature: Article
         | testbehat | testbehat |
         Then I store it
 
-    Scenario: Change Role to Admin Course
+    Scenario: Change Role to Super Admin
         Given information about "users" by "username" "testbehat"
-    	When my role change to "Admin Courses" role
+    	When my role change to "Super Admin" role
 
-    
+    Scenario: Create Article
+        Given token with username "testbehat"
+        When I "POST" in "api/admin/article/create"
+        And I fill post with this:
+        | title       | category | content      |
+        | testarticle | test     | Test Article |
+        |             | article  |              |
+        Then I store it
+
+    Scenario: Edit Article
+        Given token with username "testbehat"
+        Given information about "articles" by "title" "testarticle"
+        When I "PUT" in "api/admin/article/edit" by column "title_slug"
+        And I fill post with this:
+        | title           | category | content           |
+        | testarticleedit | test     | Test Edit Article |
+        |                 | edit     |                   |
+        |                 | article  |                   |
+
+    Scenario: Show All Article
+        Given token with username "testbehat"
+        When I "GET" in "api/admin/article/all"
+
+    Scenario: Soft Delete Article
+        Given token with username "testbehat"
+        Given information about "articles" by "title" "testarticle"
+        When I "POST" in "api/admin/article/soft_delete" by column "title_slug"
+        Then I store it
+
+    Scenario: Show Trash Article
+        Given token with username "testbehat"
+        When I "GET" in "api/admin/article/trash"
+
+    Scenario: Hard Delete Article
+        Given token with username "testbehat"
+        Given information about "articles" by "title" "testarticle"
+        When I "DELETE" in "api/admin/article/hard_delete" by column "title_slug"
+
+    Scenario: Delete New User
+        When I delete user with username "testbehat"

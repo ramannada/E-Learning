@@ -53,7 +53,7 @@ class UserContext implements Context
         $find = $qb->select('u_token.token')
                    ->from('user_token', 'u_token')
                    ->innerJoin('u_token', 'users', 'u', 'u_token.user_id = u.id')
-                   ->where('username = :username')
+                   ->where('u.username = :username')
                    ->setParameter(':username', $username)
                    ->execute()
                    ->fetch();
@@ -86,7 +86,7 @@ class UserContext implements Context
                  ->where('id = :id')
                  ->setParameter(':id', $this->paramContext->id)
                  ->execute()
-                 ->fetch();
+                 ->fetch()['id'];
 
         $qbRoleId = $this->featureContext->getBuilder();
         $roleId = $qbRoleId->select('id')
@@ -94,7 +94,7 @@ class UserContext implements Context
                        ->where('name = :name')
                        ->setParameter(':name', $role)
                        ->execute()
-                       ->fetch();
+                       ->fetch()['id'];
 
         $qbChangeRole = $this->featureContext->getBuilder();
         $qbChangeRole->update('user_role')

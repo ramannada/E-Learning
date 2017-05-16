@@ -105,13 +105,11 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         if ($param !== null) {
             $query = $this->setQuery($param);
             $options = $this->setOptions($query);
+        } else {
+            $options = $this->setOptions();
         }
 
-        try {
-            $this->_response = $this->_client->request('GET', $url, $options);
-        } catch (Exception $e) {
-            $this->getException($exception);
-        }
+        $this->_response = $this->_client->request($method, $url, $options);
 
     }
 
@@ -124,6 +122,8 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         if ($param !== null) {
             $query = $this->setQuery($param);
             $options = $this->setOptions($query);
+        } else {
+            $options = $this->setOptions();
         }
 
         return $this->setRequest($method, $url, $options);
