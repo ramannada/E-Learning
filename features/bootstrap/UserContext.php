@@ -45,21 +45,63 @@ class UserContext implements Context
     }
 
     /**
-     * @Given information about user with username :username
+     * @Given token with username :username
      */
-    public function getUser($username)
+    public function getToken($username)
     {
         $qb = $this->featureContext->getBuilder();
-        
-        $find = $qb->select('*')
-                   ->from('users')
+        $find = $qb->select('u_token.token')
+                   ->from('user_token', 'u_token')
+                   ->innerJoin('u_token', 'users', 'u', 'u_token.user_id = u.id')
                    ->where('username = :username')
                    ->setParameter(':username', $username)
                    ->execute()
                    ->fetch();
 
-        foreach ($find as $key => $value) {
-            $this->paramContext->{$key} = $value;
-        }
+        $this->paramContext->token = $find['token'];
     }
+
+    /**
+     * @Then I set reset password token to :token
+     */
+    public function setToken($token)
+    {
+        $qb = $this->featureContext->getBuilder();
+        $qb->update('password_reset')
+           ->set('token', ':token')
+           ->where('user_id', ':user_id')
+           ->setParameter(':token', $token)
+           ->setParameter(':user_id', $this->paramContext->id)
+           ->execute();
+    }
+
+    /**
+     * @When my role change to :role role
+     */
+    public function changeRole($role)
+    {
+        $qbId = $this->featureContext->getBuilder();
+        $id = $qbId->select('id')
+                 ->from('users')
+                 ->where('id = :id')
+                 ->setParameter(':id', $this->paramContext->id)
+                 ->execute()
+                 ->fetch();
+
+        $qbRoleId = $this->featureContext->getBuilder();
+        $roleId = $qbRoleId->select('id')
+                       ->from('role')
+                       ->where('name = :name')
+                       ->setParameter(':name', $role)
+                       ->execute()
+                       ->fetch();
+
+        $qbChangeRole = $this->featureContext->getBuilder();
+        $qbChangeRole->update('user_role')
+                     ->set('role_id', $roleId)
+                     ->where('user_id = :user_id')
+                     ->setParameter(':user_id', $id)
+                     ->execute();
+    }
+
 }

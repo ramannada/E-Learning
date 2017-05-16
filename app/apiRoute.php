@@ -10,9 +10,9 @@ $app->group('/api', function() use ($app,$container) {
     $app->post('/password_reset', 'App\Controllers\Api\UserController:passwordReset')->setName('api.user.password.reset');
     $app->get('/renew_password', 'App\Controllers\Api\UserController:getReNewPassword')->setName('api.user.get.renew.password');
     $app->put('/renew_password', 'App\Controllers\Api\UserController:putReNewPassword')->setName('api.user.put.renew.password');
-	
-    $app->get('/profile/edit/{id}', 'App\Controllers\Api\UserController:getEditProfile')->setName('api.get.edit.profile.user');
-    $app->put('/profile/edit/{id}', 'App\Controllers\Api\UserController:putEditProfile')->setName('api.put.edit.profile.user');
+
+    $app->get('/profile/{id}/edit', 'App\Controllers\Api\UserController:getEditProfile')->setName('api.get.edit.profile.user');
+    $app->put('/profile/{id}/edit', 'App\Controllers\Api\UserController:putEditProfile')->setName('api.put.edit.profile.user');
 
     $app->group('/admin', function() use ($app,$container) {
 		$app->group('/article', function() use($app, $container) {
@@ -24,6 +24,5 @@ $app->group('/api', function() use ($app,$container) {
 			$app->put('/{slug}/edit', 'App\Controllers\Api\ArticleController:putUpdate')->setName('api.put.update.article');
 			$app->post('/{slug}/soft_delete', 'App\Controllers\Api\ArticleController:softDelete')->setName('api.post.soft.delete.article');
 			$app->post('/{slug}/hard_delete', 'App\Controllers\Api\ArticleController:hardDelete')->setName('api.post.soft.delete.article');
-	});
-    
+	});    
 })->add(new \App\Middlewares\Api\AuthToken($container));

@@ -31,7 +31,7 @@ class CreateTablePasswordReset extends AbstractMigration
         $table->addColumn('user_id', 'integer')
               ->addColumn('token', 'string')
               ->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-              ->addForeignKey('user_id', 'users', 'id', ['update' => 'CASCADE', 'delete' => 'NO_ACTION'])
+              ->addForeignKey('user_id', 'users', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
               ->addIndex('token')
               ->create();
     }
