@@ -297,4 +297,26 @@ class UserController extends \App\Controllers\BaseController
             return $this->responseDetail("Error", 400, $this->validator->errors());
         }
     }
+
+    public function changePassword(Request $request, Response $response)
+    {
+        $auth = new \App\Models\Users\UserToken;
+        $auth = $auth->find('token', $request->getHeader('HTTP_AUTHORIZATION')[0])->fetch();
+
+        $users = new \App\Models\Users\User;
+        $user = $users->find('id', $auth['user_id'])->fetch();
+
+        if ($request->getParam('newPassword') == $request->getParam('confirmPassword')) {
+            if (password_verify($request->getParam('password'), $user['password'])) {
+                $update = ['password' => $request->getParam('newPassword')];
+                $users->update($update, 'id', $user['id']);
+
+                return $this->responseDetail("Change password success", 200, $user);
+            } else {
+                return $this->responseDetail("Wrong password", 400);
+            }
+        } else {
+            return $this->responseDetail("New password and confirm password not same", 400);
+        }
+    }
 }
