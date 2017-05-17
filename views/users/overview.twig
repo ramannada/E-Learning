@@ -1,0 +1,50 @@
+{% extends 'users/app.twig' %}
+
+{% block title %} E-Learning-Overview {% endblock %}
+
+{% block css %}
+    <style>
+        .item{
+          font-size: .85em;
+          color: #9f9f9f;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+     {% include 'users/partials/sidebar_account.twig' %}
+      <div class="col-lg-9">
+        <h3>Overview</h3>
+        <div class="well"> 
+          <h3>Account details</h3>
+          <table class="table">
+            <tr>
+              <th width="20%">Username</th>
+              <td>: ujang123</td>
+            </tr>
+            <tr>
+              <th width="20%">Name</th>
+              <td>: Ujang</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>: Ujang@gmail.com</td>
+            </tr>
+            <tr>
+              <th>Phone</th>
+              <td>: 08241231232</td>
+            </tr>
+            <tr>
+              <th>Type Account</th>
+              <td>: Free</td>
+            </tr>
+            <tr>
+              <th>Date Created</th>
+              <td>May, 25th 2017</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+{% endblock %}
