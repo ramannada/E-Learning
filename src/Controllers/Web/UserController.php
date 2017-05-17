@@ -98,12 +98,12 @@ class UserController extends \App\Controllers\BaseController
                     'meta'  => $contents['meta'],
                 ];
 
-                $resp = $response->withRedirect($this->router->pathFor('web.home'));
+                return $response->withRedirect($this->router->pathFor('web.home'));
 
             } else {
                 $this->flash->addMessage('errors', 'Failed to login');
 
-                $resp = $response->withRedirect($this->router->pathFor('web.user.login'));
+                return $response->withRedirect($this->router->pathFor('web.user.login'));
             }
         } catch (GuzzleException $e) {
             $error = json_decode($e->getResponse()->getBody()->getContents())->data;
