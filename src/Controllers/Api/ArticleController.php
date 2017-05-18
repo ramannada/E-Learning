@@ -57,6 +57,18 @@ class ArticleController extends \App\Controllers\BaseController
         return $this->responseDetail("Data Available", 200, $findArticle);
     }
 
+    public function getCreate(Request $request, Response $response)
+    {
+        $category = new \App\Models\Categories\Category;
+        $find = $category->getAll()->fetchAll();
+
+        if ($find) {
+            return $this->responseDetail("Category Available", 200, $find);
+        } else {
+            return $this->responseDetail("Category Not Available", 200);
+        }
+    }
+
 	public function create(Request $request, Response $response)
 	{
 		$post = $request->getParams();

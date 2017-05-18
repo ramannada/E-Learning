@@ -29,6 +29,7 @@ $app->group('/api', function() use ($app,$container) {
 
 			$app->get('/trash', 'App\Controllers\Api\ArticleController:showTrashByIdUser')->setName('api.get.trash.article');
 
+			$app->get('/create', 'App\Controllers\Api\ArticleController:getCreate')->setName('api.get.create.article');
 			$app->post('/create', 'App\Controllers\Api\ArticleController:create')->setName('api.create.article');
 
 			$app->get('/{slug}/edit', 'App\Controllers\Api\ArticleController:getUpdate')->setName('api.get.update.article');
