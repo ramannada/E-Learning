@@ -6,7 +6,9 @@ class AuthWeb extends \App\Middlewares\BaseMiddleware
 {
 	public function __invoke($request, $response, $next)
 	{
-		$whiteList = ['/', 'register', 'login', 'active'];
+		$whiteList = ['/', 'register', 'login', 'active', 'password_reset', 'renew_password', 'logout'];
+
+		$greyList = ['profile', 'profile/edit'];
 
 		if (!in_array($request->getUri()->getPath(), $whiteList)) {
 			if (!isset($_SESSION['login'])) {
@@ -15,11 +17,11 @@ class AuthWeb extends \App\Middlewares\BaseMiddleware
 
 				$this->flash->addMessage('errors', 'You must Login to access that page');
 
-				return $response->withRedirect($this->container->router->pathFor('user.login'));
-			} elseif ($_SESSION['login']['data']['is_active'] == 0) {
+				return $response->withRedirect($this->container->router->pathFor('web.user.login'));
+			} elseif ($_SESSION['login']['data']['is_active'] == 0 && !in_array($request->getUri()->getPath(), $greyList)) {
 				$this->flash->addMessage('errors', 'You must Activate Your Account');
 
-				return $response->withRedirect($this->container->router->pathFor('user.login'));
+				return $response->withRedirect($this->container->router->pathFor('web.user.login'));
 			}
 		}
 

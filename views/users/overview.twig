@@ -21,19 +21,19 @@
           <table class="table">
             <tr>
               <th width="20%">Username</th>
-              <td>: {{data.username}}</td>
+              <td>: {{user.username}}</td>
             </tr>
             <tr>
               <th width="20%">Name</th>
-              <td>: {{data.name}}</td>
+              <td>: {{user.name}}</td>
             </tr>
             <tr>
               <th>Email</th>
-              <td>: {{data.email}}</td>
+              <td>: {{user.email}}</td>
             </tr>
             <tr>
               <th>Phone</th>
-              <td>: {% if data.phone %}{{data.phone}}{% else %}
+              <td>: {% if user.phone %}{{user.phone}}{% else %}
                   -{% endif %}</td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
               <th>Date Created</th>
-              <td>{{data.create_at|date(D, F d Y)}}</td>
+              <td>: {{user.create_at|date('D, F d Y')}}</td>
             </tr>
           </table>
         </div>

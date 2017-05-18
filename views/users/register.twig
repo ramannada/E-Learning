@@ -1,5 +1,10 @@
 {% extends 'template.twig' %}
 
+{% block title %}E-Learning - Register{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
+{% endblock %}
+
 {% block body %}
 <body class="hold-transition register-page">
     <div class="register-box">
@@ -27,7 +32,7 @@
                 </div>
 
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="Phone">
+                    <input type="text" class="input-medium bfh-phone form-control" id="phone" data-format="+62 (ddd) dddd-dddd" placeholder="Phone" name="phone">
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
                 </div>
 
@@ -57,4 +62,8 @@
         </div>
     </div>
 </body>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
 {% endblock %}

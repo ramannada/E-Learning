@@ -1,5 +1,6 @@
 {% extends 'template.twig' %}
 
+{% block title %}E-Learning - Login{% endblock %}
 {% block body %}
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -25,7 +26,7 @@
                 </div>
             </form>
             <a href="{{ path_for('web.user.register') }}" class="text-center">Register a new membership</a>
-            <a class="pull-right" href="#" class="text-center">Forgot Password</a>
+            <a class="pull-right" href="{{ path_for('web.user.password.reset') }}" class="text-center">Forgot Password</a>
         </div>
     </div>
 </body>

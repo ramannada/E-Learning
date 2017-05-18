@@ -22,7 +22,7 @@ $app->group('', function() use($app,$container) {
 	$app->get('/profile', 'App\Controllers\Web\UserController:myAccount')->setName('web.user.my.account');
 
 	$app->get('/profile/edit', 'App\Controllers\Web\UserController:getEditProfile')->setName('web.user.edit_profile');
-	$app->post('/edit_profile', 'App\Controllers\Web\UserController:postEditProfile');
+	$app->post('/profile/edit', 'App\Controllers\Web\UserController:postEditProfile');
 
 	$app->get('/profile/change_password', 'App\Controllers\Web\UserController:getChangePassword')->setName('web.user.change.password');
 	$app->post('/profile/change_password', 'App\Controllers\Web\UserController:postChangePassword');
