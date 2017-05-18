@@ -67,7 +67,7 @@ class UserController extends \App\Controllers\BaseController
 
                 return $response->withRedirect($this->router->pathFor('web.home'));
             } else {
-                $this->flash->addMessage('errors','Failed your account is not activated');
+                $this->flash->addMessage('errors','Failed your account is not activated, please check your email');
 
                 return $response->withRedirect($this->router->pathFor('web.home'));
             }
@@ -223,5 +223,100 @@ class UserController extends \App\Controllers\BaseController
                   ['id' => $data['data']['id']]));
 
         return $this->view->render($response, 'users/edit_profile.twig', ['user' => $data['data']]);
+    }
+
+    public function postEditProfile (Request $request, Response $response)
+    {
+        $id = $_SESSION['login']['data']['id'];
+        $reqData = $request->getParams();
+        $reqPhoto = $request->getUploadedFiles()['photo'];
+        
+        $imageName = $reqPhoto->getClientFilename();
+        $imageMimeType = $reqPhoto->getClientMediaType();
+
+        if (!($imageName == null)) {   
+            $data[] = [
+                'name' => "photo",
+                'filename' => $imageName,
+                'Mime-Type'=> $imageMimeType,
+                'contents' => fopen(realpath($reqPhoto->file), 'rb'),
+            ];
+        }
+
+        foreach ($reqData as $key => $value) {
+            $data[] = [
+                'name' => $key,
+                'contents' => $value,
+            ];
+        }
+
+        try {
+            $client = $this->testing->request('PUT', $this->router->pathFor('api.put.edit.profile.user', ['id' => $id]), [ 'multipart' => $data]);
+
+            $this->flash->addMessage('success', 'Data has bean Update');
+
+            $contents = json_decode($client->getBody()->getContents(), true);
+            
+            $_SESSION['login'] = [
+                'data'  => $contents['data'],
+                'meta'  => $contents['meta'],
+            ];
+
+            return $response->withRedirect($this->router->pathFor(
+                   'web.user.edit_profile'));
+        } catch (GuzzleException $e) {
+            $error = json_decode($e->getResponse()->getBody()->getContents())->data;
+
+            $this->flash->addMessage('errors', $error[0]);
+
+            return $response->withRedirect($this->router->pathFor(
+                   'web.user.edit_profile'));
+        }
+    
+    }
+
+    public function getChangePassword(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'users/change_password.twig');
+    }
+
+    public function postChangePassword(Request $request, Response $response)
+    {
+        $body = $request->getParsedBody();
+
+        try {
+           $client = $this->testing->request('PUT', $this->router->pathFor('api.user.password.change'), ['json' => $body]);
+
+           $this->flash->addMessage('success', 'Change Password Success, please re-login');
+
+           return $response->withRedirect($this->router->pathFor('web.user.login'));
+        } catch (Exception $e) {
+            $errorArr = explode(' ', $error);
+
+            $_SESSION['errors'][lcfirst($errorArr[0])][] = $error;
+
+            return $response->withRedirect($this->router->pathFor('web.user.change.password'));
+        }
+    }
+
+    public function otherAccount(Request $request, Response $response, $args)
+    {
+        $client = $this->testing->request('GET', $this->router->pathFor('api.user.other.account', ['username' => $args['username']]));
+
+        if ($client->getStatusCode() == 200) {
+            $contents = json_decode($login->getBody()->getContents(), true);
+
+            return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
+        } else {
+            throw new \Slim\Exception\NotFoundException($request, $response);
+        }
+    }
+
+    public function myAccount(Request $request, Response $response)
+    {
+        $client = $this->testing->request('GET', $this->router->pathFor('api.user.other.account', ['username' => $_SESSION['login']['data']['username']]));
+        $contents = json_decode($login->getBody()->getContents(), true);
+
+        return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
     }
 }

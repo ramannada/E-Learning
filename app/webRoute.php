@@ -19,10 +19,15 @@ $app->group('', function() use($app,$container) {
 	$app->get('/renew_password', 'App\Controllers\Web\UserController:getReNewPassword')->setName('web.user.renew.password');
 	$app->post('/renew_password', 'App\Controllers\Web\UserController:postReNewPassword');
 
-	$app->get('/edit_profile', 'App\Controllers\Web\UserController:getEditProfile')->setName('web.user.edit_profile');
+	$app->get('/profile', 'App\Controllers\Web\UserController:myAccount')->setName('web.user.my.account');
+
+	$app->get('/profile/edit', 'App\Controllers\Web\UserController:getEditProfile')->setName('web.user.edit_profile');
 	$app->post('/edit_profile', 'App\Controllers\Web\UserController:postEditProfile');
+
+	$app->get('/profile/change_password', 'App\Controllers\Web\UserController:getChangePassword')->setName('web.user.change.password');
+	$app->post('/profile/change_password', 'App\Controllers\Web\UserController:postChangePassword');
+
+	$app->get('/{username}', 'App\Controllers\Web\UserController:otherAccount')->setName('web.user.other.account');
+
 })->add(new \App\Middlewares\Web\AuthWeb($container));
-
-
-
 ?>
