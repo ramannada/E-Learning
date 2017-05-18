@@ -28,7 +28,7 @@ Feature: Users
 
     Scenario: Change Password
         Given token with username "testbehat"
-        When I "PUT" in "api/change_password"
+        When I "PUT" in "api/profile/change_password"
         And I fill post with this:
         | old_password | new_password    | retype_password |
         | testbehat    | testchangebehat | testchangebehat |
@@ -41,7 +41,7 @@ Feature: Users
     	| testbehat@gmail.com |
     	Then I store it
 
-     Scenario: ReNew Password
+    Scenario: ReNew Password
     	Given information about "users" by "username" "testbehat"
     	And I set reset password token to "resetpassword"
     	When I "PUT" in "api/renew_password" with param:
@@ -51,6 +51,11 @@ Feature: Users
     	| password       | retype_password |
     	| testrenewbehat | testrenewbehat  |
     	Then I store it
+
+    Scenario: Find Other User
+        Given token with username "testbehat"
+        Given information about "users" by "username" "testbehat"
+        When I "GET" in "api" by column "username"
 
     Scenario: Delete New User
         When I delete user with username "testbehat"
