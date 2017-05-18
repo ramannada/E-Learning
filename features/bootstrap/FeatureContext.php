@@ -143,7 +143,7 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
             array_push($link, $this->paramContext->{$value});
         }
 
-        if (count($link) > 2) {
+        if (count($link) > 2 && $unlink != null) {
             array_push($link, $unlink);
         }
 
