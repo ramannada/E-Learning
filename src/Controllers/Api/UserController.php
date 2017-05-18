@@ -80,7 +80,7 @@ class UserController extends \App\Controllers\BaseController
 
         if (empty($login)) {
             $data = $this->responseDetail("Error", 401, "Username Not Registered");
-        } else {
+        } elseif(!empty($login)) {
             $check = password_verify($request->getParsedBody()['password'], $login['password']);
 
             if ($check) {
@@ -329,7 +329,10 @@ class UserController extends \App\Controllers\BaseController
 
         if ($this->validator->validate()) {
             if (password_verify($request->getParam('old_password'), $user['password'])) {
-                $update = ['password' => $request->getParam('new_password')];
+                $update = [
+                    'password' => password_hash($request->getParam('new_password'), PASSWORD_DEFAULT),
+                ];
+
                 $users->update($update, 'id', $user['id']);
 
                 return $this->responseDetail("Change password success", 200);
