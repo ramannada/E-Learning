@@ -356,4 +356,42 @@ class UserController extends \App\Controllers\BaseController
 
         return $this->responseDetail("Data Available", 200, $findUser);
     }
+
+    public function getBuyPremium(Request $request, Response $response)
+    {
+        $subs = new \App\Models\Subscribes\Subscriptions;
+        $find = $subs->getAll()->fetchAll();
+
+        return $this->responseDetail("Data Available", 200, $find);
+    }
+
+    public function postBuyPremium(Request $request, Response $response)
+    {
+        $token = $this->findToken();
+
+        $typeSub = $request->getParam('subs');
+        $subs = new \App\Models\Subscribes\Subscriptions;
+        $findSubs = $subs->find('name', $typeSub)->fetch();
+
+        if (!$request->getParam('payment_method_nonce')) {
+            return $this->responseDetail("Something is Wrong", 400);
+        }
+
+        $payments = new \App\Extensions\Payments\Payment;
+        $payment = $payments->payment($findSubs['price'], $request->getParam('payment_method_nonce'));
+
+        if (!$payment->success) {
+            $payments->recordPayment($token['user_id'], $findSubs['id'], 1);
+
+            return $this->responseDetail("Payment Failed", 400);
+        }
+
+        $payments->recordPayment($token['user_id'], $findSubs['id'], 0, $payment->transaction->id);
+
+        $premi = new \App\Models\Users\PremiumUser;
+        
+        $premi->setPremium($token['user_id'], $findSubs['expired_time']);
+
+        return $this->responseDetail("Congrats!, You are Premium Member Now", 201);
+    }
 }
