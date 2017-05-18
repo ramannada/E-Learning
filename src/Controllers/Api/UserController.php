@@ -256,7 +256,8 @@ class UserController extends \App\Controllers\BaseController
             }
 
             if ($request->getUploadedFiles()) {
-                $file = new \Upload\File('photo', $this->upload);
+                $upload = new \Upload\Storage\FileSystem('upload/images');
+                $file = new \Upload\File('photo', $upload);
 
                 $file->setName(uniqid());
 
