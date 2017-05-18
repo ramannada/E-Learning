@@ -27,6 +27,9 @@ $app->group('', function() use($app,$container) {
 	$app->get('/profile/change_password', 'App\Controllers\Web\UserController:getChangePassword')->setName('web.user.change.password');
 	$app->post('/profile/change_password', 'App\Controllers\Web\UserController:postChangePassword');
 
+	$app->get('/profile/premium', 'App\Controllers\Web\UserController:getPremium')->setName('web.user.premium');
+	$app->post('/profile/premium', 'App\Controllers\Web\UserController:postPremium');
+
 	$app->get('/{username}', 'App\Controllers\Web\UserController:otherAccount')->setName('web.user.other.account');
 
 })->add(new \App\Middlewares\Web\AuthWeb($container));

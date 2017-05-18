@@ -292,10 +292,16 @@ class UserController extends \App\Controllers\BaseController
            unset($_SESSION['login']);
 
            return $response->withRedirect($this->router->pathFor('web.user.login'));
-        } catch (Exception $e) {
-            $errorArr = explode(' ', $error);
-
-            $_SESSION['errors'][lcfirst($errorArr[0])][] = $error;
+        } catch (GuzzleException $e) {
+            $error = json_decode($e->getResponse()->getBody()->getContents(),true);
+            
+            if ($error['data']) {
+                foreach ($error['data'] as $key => $value) {
+                    $_SESSION['errors'][lcfirst($key)][] = $value[0];
+                }
+            } else {
+                $this->flash->addMessage('errors', $error['message']);
+            }
 
             return $response->withRedirect($this->router->pathFor('web.user.change.password'));
         }
@@ -320,5 +326,36 @@ class UserController extends \App\Controllers\BaseController
         $contents = json_decode($client->getBody()->getContents(), true);
 
         return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
+    }
+
+    public function getPremium(Request $request, Response $response)
+    {
+        $client = $this->testing->request('GET', $this->router->pathFor('api.user.premium'));
+        $contents = json_decode($client->getBody()->getContents(), true);
+
+        return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
+    }
+
+    public function postPremium(Request $request, Response $response)
+    {
+        $req = $request->getParams();
+
+        try {
+            $client = $this->testing->request('POST'. $this->router->pathFor('api.user.premium'), ['body' => $req]);
+
+            $contents = json_decode($client->getBody()->getContents(), true);
+
+            $this->flash->addMessage('success', $contents['message']);
+
+            $_SESSION['login']['meta']['is_premium'] = 1;
+
+            return $response->withRedirect($this->router->pathFor('web.home'));
+        } catch (GuzzleException $e) {
+            $error = json_decode($e->getResponse()->getBody()->getContents(),true);
+
+            $this->flash->addMessage('errors', $error['message']);
+
+            return $response->withRedirect($this->router->pathFor('web.user.premium'));
+        }
     }
 }
