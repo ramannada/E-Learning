@@ -57,6 +57,18 @@ class ArticleController extends \App\Controllers\BaseController
         return $this->responseDetail("Data Available", 200, $findArticle);
     }
 
+    public function getCreate(Request $request, Response $response)
+    {
+        $category = new \App\Models\Categories\Category;
+        $find = $category->getAll()->fetchAll();
+
+        if ($find) {
+            return $this->responseDetail("Category Available", 200, $find);
+        } else {
+            return $this->responseDetail("Category Not Available", 200);
+        }
+    }
+
 	public function create(Request $request, Response $response)
 	{
 		$post = $request->getParams();
@@ -140,7 +152,7 @@ class ArticleController extends \App\Controllers\BaseController
         } elseif (!$validateUser) {
             return $this->responseDetail("You have not Authorized to edit this article", 401);
         }
-        
+
         return $this->responseDetail("Data Available", 200, $getArticle);
     }
 
@@ -150,7 +162,7 @@ class ArticleController extends \App\Controllers\BaseController
 
         $article = new \App\Models\Articles\Article;
         $getArticle = $article->getEdit($args['slug']);
-        
+
         $validateUser = $this->validateUser($token, $getArticle);
 
         if (!$this->checkArticle($getArticle)) {
@@ -201,7 +213,7 @@ class ArticleController extends \App\Controllers\BaseController
 
         $article = new \App\Models\Articles\Article;
         $findArticle = $article->find('title_slug', $args['slug'])->withoutDelete()->fetch();
-        
+
         $validateUser = $this->validateUser($token, $findArticle);
 
         if (!$this->checkArticle($findArticle)) {
@@ -241,7 +253,7 @@ class ArticleController extends \App\Controllers\BaseController
 
         $article = new \App\Models\Articles\Article;
         $findArticle = $article->find('title_slug', $args['slug'])->fetch();
-        
+
         $validateUser = $this->validateUser($token, $findArticle);
 
         if (!$this->checkArticle($findArticle)) {

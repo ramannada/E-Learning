@@ -37,6 +37,22 @@ $container['view'] = function (Container $container) {
 
 	$view->getEnvironment()->addGlobal('baseUrl', 'localhost:8080');
 
+	if (isset($_SESSION['login'])) {
+        $view->getEnvironment()->addGlobal('login', $_SESSION['login']);
+    }
+
+    if (isset($_SESSION['errors'])) {
+        $view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
+        
+        unset($_SESSION['errors']);
+    }
+
+    if ($_SESSION['old']) {
+		$view->getEnvironment()->addGlobal('old', $_SESSION['old']);
+		
+		unset($_SESSION['old']);
+	}
+
 	return $view;
 };
 

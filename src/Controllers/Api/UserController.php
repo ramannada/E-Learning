@@ -95,9 +95,13 @@ class UserController extends \App\Controllers\BaseController
                 $role = new \App\Models\Users\UserRole;
                 $findRole = $role->find('user_id', $getToken['user_id'])->fetch();
 
+                $premium = new \App\Models\Users\PremiumUser;
+                $findPremi = $premium->find('user_id', $login['id'])->fetch();
+
                 $key = [
-                    'token' => $getToken,
-                    'role'  => $findRole['role_id'],
+                    'token'     => $getToken,
+                    'role'      => $findRole['role_id'],
+                    'is_premium'=> $findPremi ? 1 : 0,
                 ];
 
                 return $this->responseDetail("Login Success", 200, $login, $key);
@@ -300,8 +304,7 @@ class UserController extends \App\Controllers\BaseController
 
     public function changePassword(Request $request, Response $response)
     {
-        $auth = new \App\Models\Users\UserToken;
-        $auth = $auth->find('token', $request->getHeader('HTTP_AUTHORIZATION')[0])->fetch();
+        $auth = $this->findToken();
 
         $users = new \App\Models\Users\User;
         $user = $users->find('id', $auth['user_id'])->fetch();
@@ -336,5 +339,17 @@ class UserController extends \App\Controllers\BaseController
         } else {
             return $this->responseDetail("Error", 400, $this->validator->errors());
         }
+    }
+
+    public function otherAccount(Request $request, Response $response, $args)
+    {
+        $users = new \App\Models\Users\User;
+        $findUser = $users->find('username', $args['username'])->fetch();
+
+        if (!$findUser) {
+            return $this->responseDetail("Data Not Found", 404);
+        }
+
+        return $this->responseDetail("Data Available", 200, $findUser);
     }
 }
