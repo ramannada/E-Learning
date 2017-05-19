@@ -4,4 +4,9 @@ app/settings.php
 composer.lock
 mysql/
 behat.yml
+<<<<<<< HEAD
 public/upload/images/*
+=======
+public/upload/images/*
+!public/upload/images/default_user.png
+>>>>>>> 8b117907c29988cb842ed6123232fa00671df287

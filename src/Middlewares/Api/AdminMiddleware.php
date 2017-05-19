@@ -9,7 +9,7 @@ class AdminMiddleware extends \App\Middlewares\BaseMiddleware
 {
 	public function __invoke(Request $request, Response $response, $next)
 	{
-		$blackList = ['api/admin/course/add_admin_course'];
+		$blackList = ['api/admin/course/add_admin_course', 'api/admin/article/all'];
 
 		$token = $request->getHeader('Authorization')[0];
 

@@ -9,7 +9,7 @@ class AuthToken extends \App\Middlewares\BaseMiddleware
 {
 	public function __invoke(Request $request, Response $response, $next)
 	{
-		$whiteList = ['/', 'api/register', 'api/login', 'api/active', 'api/password_reset', 'api/renew_password'];
+		$whiteList = ['/', 'api/register', 'api/login', 'api/active', 'api/password_reset', 'api/renew_password', 'api/braintree/token'];
 
 		if (!in_array($request->getUri()->getPath(), $whiteList)) {
 			$token = $request->getHeader('Authorization')[0];

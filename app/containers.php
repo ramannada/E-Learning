@@ -90,3 +90,8 @@ $container['testing'] = function (Container $container) {
 	$setting = $container->get('settings')['guzzle'];
 	return new Client(['base_uri' => $setting['base_uri'], 'headers' => $setting['headers']]);
 };
+
+Braintree_Configuration::environment('sandbox');
+Braintree_Configuration::merchantId('nvmbs4hhtkj37r4t');
+Braintree_Configuration::publicKey('zgsgzx783qm5qbd9');
+Braintree_Configuration::privateKey('e2fee1c21285b180596b2029f365fe32');

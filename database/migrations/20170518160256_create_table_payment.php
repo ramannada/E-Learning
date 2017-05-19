@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateArticleTable extends AbstractMigration
+class CreateTablePayment extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,18 +27,15 @@ class CreateArticleTable extends AbstractMigration
      */
     public function change()
     {
-        $article = $this->table('articles');
-        $article->addColumn('user_id', 'integer')
-                ->addColumn('title', 'string')
-                ->addColumn('title_slug', 'string')
-                ->addColumn('content', 'text')
+        $payment = $this->table('payment');
+        $payment->addColumn('user_id', 'integer')
+                ->addColumn('subs_id', 'integer')
+                ->addColumn('transaction_id', 'string', ['null' => true])
+                ->addColumn('failed', 'integer')
                 ->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
                 ->addColumn('update_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
-                ->addColumn('is_publish', 'integer', ['default' => 0])
-                ->addColumn('publish_at', 'datetime', ['null' => true])
-                ->addColumn('deleted', 'integer', ['default' => 0])
                 ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addIndex(['title', 'title_slug'])
+                ->addForeignKey('subs_id', 'subscriptions', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->create();
     }
 }
