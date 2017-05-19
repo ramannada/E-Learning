@@ -35,9 +35,10 @@ class CreateArticleTable extends AbstractMigration
                 ->addColumn('create_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
                 ->addColumn('update_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
                 ->addColumn('is_publish', 'integer', ['default' => 0])
+                ->addColumn('publish_at', 'datetime', ['null' => true])
                 ->addColumn('deleted', 'integer', ['default' => 0])
                 ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addIndex(['title'])
+                ->addIndex(['title', 'title_slug'])
                 ->create();
     }
 }
