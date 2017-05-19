@@ -41,6 +41,6 @@ class BrainTreePayment
 
 		$result = array_merge($data, $payment);
 
-		$payments->updateOrCreate($result, 'user_id', $userId);
+		$payments->create($result);
 	}
 }

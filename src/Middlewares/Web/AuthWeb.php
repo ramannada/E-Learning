@@ -8,7 +8,7 @@ class AuthWeb extends \App\Middlewares\BaseMiddleware
 	{
 		$whiteList = ['/', 'register', 'login', 'active', 'password_reset', 'renew_password', 'logout'];
 
-		$greyList = ['profile', 'profile/edit'];
+		$greyList = ['profile', 'profile/edit', 'profile/change_password'];
 
 		if (!in_array($request->getUri()->getPath(), $whiteList)) {
 			if (!isset($_SESSION['login'])) {

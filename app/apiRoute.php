@@ -14,7 +14,7 @@ $app->group('/api', function() use ($app,$container) {
     $app->get('/braintree/token', 'App\Controllers\Api\BrainTreeController:token')->setName('braintree.token');
 
     $app->get('/profile/premium', 'App\Controllers\Api\UserController:getBuyPremium')->setName('api.user.premium');
-    $app->post('/profile/premium', 'App\Controllers\Api\UserController:postBuyPremium')->setName('api.post.user.premium');
+    $app->post('/profile/premium', 'App\Controllers\Api\UserController:postBuyPremium');
 	
     $app->put('/profile/change_password', 'App\Controllers\Api\UserController:changePassword')->setName('api.user.password.change');
 

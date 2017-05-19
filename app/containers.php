@@ -92,6 +92,6 @@ $container['testing'] = function (Container $container) {
 };
 
 Braintree_Configuration::environment('sandbox');
-Braintree_Configuration::merchantId('nvmbs4hhtkj37r4t');
-Braintree_Configuration::publicKey('zgsgzx783qm5qbd9');
-Braintree_Configuration::privateKey('e2fee1c21285b180596b2029f365fe32');
+Braintree_Configuration::merchantId('wvmyjffcrxjxzzdk');
+Braintree_Configuration::publicKey('xyjr9fnf93wjs2x5');
+Braintree_Configuration::privateKey('7d1425b4e9868833641a7981e18bba70');

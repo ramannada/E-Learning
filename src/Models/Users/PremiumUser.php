@@ -9,7 +9,7 @@ class PremiumUser extends \App\Models\BaseModel
 
     public function setPremium($userId, $time)
     {
-    	$find = $this->find('user_id', $userId);
+    	$find = $this->find('user_id', $userId)->fetch();
 
     	$userPremi = [
             'user_id'   => $userId,

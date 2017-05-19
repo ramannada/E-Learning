@@ -330,10 +330,10 @@ class UserController extends \App\Controllers\BaseController
 
     public function getPremium(Request $request, Response $response)
     {
-        $client = $this->testing->request('GET', $this->router->pathFor('api.user.premium'));
-        $contents = json_decode($client->getBody()->getContents(), true);
+        // $client = $this->testing->request('GET', $this->router->pathFor('api.user.premium'));
+        // $contents = json_decode($client->getBody()->getContents(), true);
 
-        return $this->view->render($response, 'users/upgrade_user.twig', ['data' => $contents['data']]);
+        return $this->view->render($response, 'users/upgrade_user.twig');
     }
 
     public function postPremium(Request $request, Response $response)
