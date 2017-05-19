@@ -251,7 +251,7 @@ class UserController extends \App\Controllers\BaseController
         }
 
         try {
-            $client = $this->testing->request('PUT', $this->router->pathFor('api.put.edit.profile.user', ['id' => $id]), [ 'multipart' => $data]);
+            $client = $this->testing->request('POST', $this->router->pathFor('api.put.edit.profile.user', ['id' => $id]), [ 'multipart' => $data]);
 
             $this->flash->addMessage('success', 'Data has bean Update');
 
@@ -259,13 +259,13 @@ class UserController extends \App\Controllers\BaseController
 
             $_SESSION['login'] = [
                 'data'  => $contents['data'],
-                'meta'  => $contents['meta'],
+                'meta'  => $_SESSION['login']['meta'],
             ];
 
             return $response->withRedirect($this->router->pathFor(
                    'web.user.edit_profile'));
         } catch (GuzzleException $e) {
-            $error = json_decode($e->getResponse()->getBody()->getContents())->data;
+            $error = json_decode($e->getResponse()->getBody()->getContents(),true);
 
             $this->flash->addMessage('errors', $error[0]);
 
@@ -288,6 +288,8 @@ class UserController extends \App\Controllers\BaseController
            $client = $this->testing->request('PUT', $this->router->pathFor('api.user.password.change'), ['json' => $body]);
 
            $this->flash->addMessage('success', 'Change Password Success, please re-login');
+
+           unset($_SESSION['login']);
 
            return $response->withRedirect($this->router->pathFor('web.user.login'));
         } catch (Exception $e) {
@@ -315,7 +317,7 @@ class UserController extends \App\Controllers\BaseController
     public function myAccount(Request $request, Response $response)
     {
         $client = $this->testing->request('GET', $this->router->pathFor('api.user.other.account', ['username' => $_SESSION['login']['data']['username']]));
-        $contents = json_decode($login->getBody()->getContents(), true);
+        $contents = json_decode($client->getBody()->getContents(), true);
 
         return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
     }

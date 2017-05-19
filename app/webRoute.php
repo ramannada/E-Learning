@@ -22,7 +22,7 @@ $app->group('', function() use($app,$container) {
 	$app->get('/profile', 'App\Controllers\Web\UserController:myAccount')->setName('web.user.my.account');
 
 	$app->get('/profile/edit', 'App\Controllers\Web\UserController:getEditProfile')->setName('web.user.edit_profile');
-	$app->post('/edit_profile', 'App\Controllers\Web\UserController:postEditProfile');
+	$app->post('/profile/edit', 'App\Controllers\Web\UserController:postEditProfile');
 
 	$app->get('/profile/change_password', 'App\Controllers\Web\UserController:getChangePassword')->setName('web.user.change.password');
 	$app->post('/profile/change_password', 'App\Controllers\Web\UserController:postChangePassword');
@@ -36,7 +36,7 @@ $app->group('', function() use($app,$container) {
 		$app->group('/article', function() use($app, $container) {
 			$app->get('/all', 'App\Controllers\Web\ArticleController:showAll')->setName('web.get.all.article');
 
-			$app->get('/my_article', 'App\Controllers\Web\ArticleController:showByIdUser')->setName('web.get.my.article');
+			$app->get('/my_article', 'App\Controllers\Web\ArticleController:getArticleByUserId')->setName('web.get.my.article');
 
 			$app->get('/trash', 'App\Controllers\Web\ArticleController:showTrashByIdUser')->setName('web.get.trash.article');
 

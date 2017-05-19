@@ -22,17 +22,17 @@ class ArticleController extends \App\Controllers\BaseController
     public function postCreate(Request $request, Response $response)
     {
         $body = $request->getParsedBody();
-        var_dump($body);
-        die();
-        $client = $this->testing->request('GET',
+
+        $client = $this->testing->request('POST',
                   $this->router->pathFor('api.create.article'),['json' => $body]);
+
         // try {
         //
         //
-        //     if ($client->getStatusCode() == 201) {
-        //         // return $response->withRedirect($this->router->pathFor('web.list.article'));
-        //         echo "sukses";
-        //     }
+            if ($client->getStatusCode() == 201) {
+                // return $response->withRedirect($this->router->pathFor('web.list.article'));
+                echo "sukses";
+            }
         //
         // } catch (Exception $e) {
         //     $error = json_decode($e->getResponse()->getBody()->getContents())->data;
@@ -41,6 +41,26 @@ class ArticleController extends \App\Controllers\BaseController
         //
         //     return $response->withRedirect($this->router->pathFor('web.get.create.article'));
         // }
+
+    }
+    public function getArticleByUserId(Request $request, Response $response)
+    {
+        $article = $this->testing->request('GET',
+                    $this->router->pathFor('api.get.my.article'));
+        $article = json_decode($article->getBody()->getContents(), true);
+
+        return $this->view->render($response, 'articles/list_article.twig',
+                ["article" => $article['data']['data']]);
+    }
+
+    public function getUpdate(Request $request, Response $response, $args)
+    {
+        $article = $this->testing->request('GET',
+                    $this->router->pathFor('api.get.update.article',['slug' =>  $args['slug']]));
+        $article = json_decode($article->getBody()->getContents(), true);
+
+        return $this->view->render($response, 'articles/edit_article.twig',
+                ["article" => $article['data']]);
 
     }
 
