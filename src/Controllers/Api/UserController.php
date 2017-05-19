@@ -377,7 +377,7 @@ class UserController extends \App\Controllers\BaseController
             return $this->responseDetail("Something is Wrong", 400);
         }
 
-        $payments = new \App\Extensions\Payments\Payment;
+        $payments = new \App\Extensions\Payments\BrainTreePayment;
         $payment = $payments->payment($findSubs['price'], $request->getParam('payment_method_nonce'));
 
         if (!$payment->success) {

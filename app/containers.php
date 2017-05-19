@@ -6,7 +6,6 @@ use Slim\Views\TwigExtension as ViewExt;
 use RandomLib\Factory as Random;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use Braintree_Configuration;
 
 $container = $app->getContainer();
 

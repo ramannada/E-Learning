@@ -9,8 +9,8 @@ class BrainTreePayment
 	public function payment($price, $paymentMethod)
 	{
 		$result = Braintree_Transaction::sale([
-            'amount'            => $findSubs['price'],
-            'paymentMethodNonce'=> $request->getParam('payment_method_nonce'),
+            'amount'            => $price,
+            'paymentMethodNonce'=> $paymentMethod,
             'options'           => [
                 'submitForSettlement'   => true,
             ],
@@ -30,17 +30,17 @@ class BrainTreePayment
 
 		if ($fail = 1) {
 			$payment = [
-				'fail'	=> 1,
+				'failed'	=> 1,
 			];	
 		} else {
 			$payment = [
-				'fail'			=> 0,
+				'failed'		=> 0,
 				'transaction_id'=> $transId
 			];
 		}
 
 		$result = array_merge($data, $payment);
 
-		$payments->updateOrCreate($result, 'user_id', $userId);
+		$payments->create($result);
 	}
 }
