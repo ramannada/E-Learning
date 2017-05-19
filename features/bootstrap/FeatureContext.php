@@ -132,14 +132,20 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function setArgument($url, $args)
     {
         $link = explode('/', $url);
-        $unlink = array_pop($link);
-
+        
+        if (count($link) > 1) {
+            $unlink = array_pop($link);
+        }
+        
         $column = explode(',', $args);
 
         foreach ($column as $key => $value) {
             array_push($link, $this->paramContext->{$value});
         }
-        array_push($link, $unlink);
+
+        if (count($link) > 2 && $unlink != null) {
+            array_push($link, $unlink);
+        }
 
         return implode('/',$link);
     }

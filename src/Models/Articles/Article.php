@@ -278,6 +278,44 @@ class Article extends \App\Models\BaseModel
         
         return $article;
     }
+
+    public function getArticleBySlug($slug)
+    {
+        $qbArticle = $this->getBuilder();
+
+        $this->query = $qbArticle->select('u.username, a.id, a.title, a.title_slug, a.content, a.publish_at')
+                        ->from($this->table, 'a')
+                        ->innerJoin('a', 'users', 'u', 'a.user_id = u.id')
+                        ->where('a.is_publish = 1')
+                        ->andWhere('a.title_slug = :title_slug')
+                        ->setParameter(':title_slug', $slug);
+
+        $article = $this->withoutDelete()->fetch();
+
+        if (!$article) {
+            return false;
+        }
+
+        foreach ($article as $keyArticle => $valueArticle) {
+            $qb = $this->getBuilder();
+
+            $categories = $qb->select('c.name as category')
+               ->from('categories', 'c')
+               ->innerJoin('c', 'article_category', 'ac', 'c.id = ac.category_id')
+               ->innerJoin('ac', 'articles', 'a', 'ac.article_id = a.id')
+               ->where('a.id = :id AND a.deleted = 0')
+               ->setParameter(':id', $valueArticle['id'])
+               ->execute()
+               ->fetchAll();
+
+            foreach ($categories as $keyCategory => $valueCategory) {
+            $article['category'][] = $valueCategory['category'];
+            }
+
+        }
+        
+        return $article;
+    }
 }
 
 ?>

@@ -307,10 +307,23 @@ class ArticleController extends \App\Controllers\BaseController
         $page = $request->getQueryParam('page') ? $request->getQueryParam('page') : 1;
         $article = new \App\Models\Articles\Article;
 
-        $allArticle = $article->showByCategory($request->getQueryParam('search'), $page, 5);
+        $allArticle = $article->search($request->getQueryParam('query'), $page, 5);
 
         if (!$allArticle) {
             return $this->responseDetail("Articles Not Found", 404);
+        }
+
+        return $this->responseDetail("Data Available", 200, $allArticle);
+    }
+
+    public function searchBySlug(Request $request, Response $response, $args)
+    {
+        $article = new \App\Models\Articles\Article;
+
+        $allArticle = $article->getArticleBySlug($args['slug']);
+
+        if (!$allArticle) {
+            return $this->responseDetail("Article Not Found", 404);
         }
 
         return $this->responseDetail("Data Available", 200, $allArticle);
