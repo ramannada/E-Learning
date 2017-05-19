@@ -9,8 +9,8 @@
             <ul class="nav navbar-nav">
                 {% if login.meta.role < 3  and login %}
                     <li><a href="#">To Admin Dashboard</a></li>
-                {% else %}
-                    <li><a href="#">Premium</a></li>
+                {% elseif login %}
+                    <li><a href="{{path_for('web.user.premium')}}">Premium</a></li>
                 {% endif %}
                 <li><a href="#">Course</a></li>
                 <li><a href="#">Article</a></li>

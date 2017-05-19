@@ -333,7 +333,7 @@ class UserController extends \App\Controllers\BaseController
         $client = $this->testing->request('GET', $this->router->pathFor('api.user.premium'));
         $contents = json_decode($client->getBody()->getContents(), true);
 
-        return $this->view->render($response, 'users/overview.twig', ['user' => $contents['data']]);
+        return $this->view->render($response, 'users/upgrade_user.twig', ['data' => $contents['data']]);
     }
 
     public function postPremium(Request $request, Response $response)
@@ -341,7 +341,7 @@ class UserController extends \App\Controllers\BaseController
         $req = $request->getParams();
 
         try {
-            $client = $this->testing->request('POST'. $this->router->pathFor('api.user.premium'), ['body' => $req]);
+            $client = $this->testing->request('POST', $this->router->pathFor('api.user.premium'), ['form_params' => $req]);
 
             $contents = json_decode($client->getBody()->getContents(), true);
 
