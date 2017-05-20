@@ -42,9 +42,11 @@ $app->group('/api', function() use ($app,$container) {
 			$app->get('/{slug}/edit', 'App\Controllers\Api\ArticleController:getUpdate')->setName('api.get.update.article');
 			$app->put('/{slug}/edit', 'App\Controllers\Api\ArticleController:putUpdate')->setName('api.put.update.article');
 
-			$app->post('/{slug}/soft_delete', 'App\Controllers\Api\ArticleController:softDelete')->setName('api.post.soft.delete.article');
+			$app->put('/{slug}/soft_delete', 'App\Controllers\Api\ArticleController:softDelete')->setName('api.put.soft.delete.article');
 
-			$app->delete('/{slug}/hard_delete', 'App\Controllers\Api\ArticleController:hardDelete')->setName('api.post.soft.delete.article');
+			$app->delete('/{slug}/hard_delete', 'App\Controllers\Api\ArticleController:hardDelete')->setName('api.delete.hard.delete.article');
+
+			$app->put('/{slug}/restore', 'App\Controllers\Api\ArticleController:softDelete')->setName('api.put.restore.article');
 		});
 	})->add(new \App\Middlewares\Api\AdminMiddleware($container)); 
 

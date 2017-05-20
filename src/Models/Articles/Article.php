@@ -249,8 +249,7 @@ class Article extends \App\Models\BaseModel
                         ->from($this->table, 'a')
                         ->innerJoin('a', 'users', 'u', 'a.user_id = u.id')
                         ->where('a.is_publish = 1')
-                        ->andWhere('a.title LIKE %:title%')
-                        ->setParameter(':title', $search);
+                        ->andWhere('a.title LIKE %'.$title.'%');
 
         $article = $this->withoutDelete()->paginate($page, $limit);
 

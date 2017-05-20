@@ -248,7 +248,7 @@ class ArticleController extends \App\Controllers\BaseController
             return $this->responseDetail("You have not Authorized to edit this article", 401);
         }
 
-        $article->softDelete('id', $findArticle['id']);
+        $article->restore('id', $findArticle['id']);
 
         return $this->responseDetail($findArticle['title'] .'is restored', 200);
     }
@@ -277,8 +277,10 @@ class ArticleController extends \App\Controllers\BaseController
     {
         $page = $request->getQueryParam('page') ? $request->getQueryParam('page') : 1;
         $article = new \App\Models\Articles\Article;
+        $category = new \App\Models\Categories\Category;
 
-        $allArticle = $article->showForUser($page, 5);
+        $allArticle['content'] = $article->showForUser($page, 5);
+        $allArticle['category'] = $category->getAll()->fetchAll();
 
         if (!$allArticle) {
             return $this->responseDetail("Article is empty", 404);
