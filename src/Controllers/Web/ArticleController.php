@@ -27,7 +27,7 @@ class ArticleController extends \App\Controllers\BaseController
             $getArticle = json_decode($article->getBody()->getContents(), true);
 
             return $this->view->render($response, 'articles/add_article.twig',
-                    ["article" => $getArticle['data']]);
+                    ["category" => $getArticle['data']]);
         } catch (GuzzleException $e) {
             return $this->view->render($response, 'articles/list_article.twig');
         }
@@ -98,14 +98,12 @@ class ArticleController extends \App\Controllers\BaseController
 
         try {
             $client = $this->testing->request('PUT',
-                  $this->router->pathFor('api.put.update.article', ['slug' =>  $args['slug']]),['json' => $body]);
+                  $this->router->pathFor('api.put.update.article', ['slug' =>  $args['slug']]),['form_params' => $body]);
 
             $this->flash->addMessage('success', 'Edit Article Success');
 
             return $response->withRedirect($this->router->pathFor('web.get.my.article'));
         } catch (GuzzleException $e) {
-            var_dump($e);
-            die();
             $data = json_decode($e->getResponse()->getBody()->getContents(), true);
 
             $error = $data['data'] ? $data['data'] : $data['message'];
@@ -161,23 +159,32 @@ class ArticleController extends \App\Controllers\BaseController
 
     public function showForUser(Request $request, Response $response)
     {
-        $article = $this->testing->request('GET',
-                    $this->router->pathFor('api.get.trash.article'));
+        $page['page'] = $request->getQueryParam('page') ? $request->getQueryParam('page') : 1;
+        try {
+            $article = $this->testing->request('GET',
+                        $this->router->pathFor('api.article.show.for.user'), ['query' => $page]);
 
-        $article = json_decode($article->getBody()->getContents(), true);
+            $article = json_decode($article->getBody()->getContents(), true);
+        } catch (GuzzleException $e) {
+
+        }
 
         return $this->view->render($response, 'articles/index.twig', ['article' => $article['data']]);
     }
 
     public function searchByTitle(Request $request, Response $response)
     {
-        $req = $request->getParam('search');
+        $req = $request->getParam('query');
+        try {
+            $article = $this->testing->request('GET',
+                        $this->router->pathFor('api.article.search'), ['json' => $req]);
 
-        $article = $this->testing->request('GET',
-                    $this->router->pathFor('api.article.search'), ['json' => $req]);
+            $article = json_decode($article->getBody()->getContents(), true);
 
-        $article = json_decode($article->getBody()->getContents(), true);
+            return $this->view->render($response, 'articles/index.twig', ['article' => $article['data']]);
+        } catch (GuzzleException $e) {
 
+        }
         return $this->view->render($response, 'articles/index.twig', ['article' => $article['data']]);
     }
 
@@ -193,12 +200,16 @@ class ArticleController extends \App\Controllers\BaseController
 
     public function detail(Request $request, Response $response, $args)
     {
-        $article = $this->testing->request('GET',
-                    $this->router->pathFor('api.article.slug', ['slug' => $args['slug']]));
+        try {
+            $article = $this->testing->request('GET',
+                        $this->router->pathFor('api.article.slug', ['slug' => $args['slug']]));
 
-        $article = json_decode($article->getBody()->getContents(), true);
+            $article = json_decode($article->getBody()->getContents(), true);
 
-        return $this->view->render($response, 'articles/detail.twig', ['article' => $article['data']]);
+            return $this->view->render($response, 'articles/detail.twig', ['article' => $article['data']]);
+        } catch (GuzzleException $e) {
+            return $this->view->render($response, 'articles/detail.twig');
+        }
     }
 
 }

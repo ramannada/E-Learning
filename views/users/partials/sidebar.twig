@@ -26,9 +26,11 @@
             <i class="fa fa-user"></i> <span>Accounts</span>
         </a>
     </li>
-    <li class="treeview">
-        <a href="{{path_for('web.user.premium')}}">
-            <i class="fa fa-diamond"></i> <span>Premium</span>
-        </a>
-    </li>
+    {% if login.meta.role == 3 %}
+        <li class="treeview">
+            <a href="{{path_for('web.user.premium')}}">
+                <i class="fa fa-diamond"></i> <span>Premium</span>
+            </a>
+        </li>
+    {% endif %}
 </ul>
