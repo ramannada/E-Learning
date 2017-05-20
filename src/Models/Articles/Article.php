@@ -33,28 +33,27 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
 
 
     }
-    public function add(array $data, $publish = null)
+    public function add(array $data)
     {
-        $data = [
+        $add = [
             'user_id'       => $data['user_id'],
             'title'         => $data['title'],
             'title_slug'    => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($data['title'])),
             'content'       => $data['content'],
+            'is_publish'    => $data['is_publish'],
         ];
 
-        if ($publish) {
-            $merge['is_publish'] = 1;
+        if ($add['is_publish'] == 1) {
             $merge['publish_at'] = date('Y-m-d H:i:s');
-
-            $data = array_merge($data, $merge);
         }
+        $create = array_merge($add, $merge);
 
-        return $this->checkOrCreate($data);
+        return $this->checkOrCreate($create);
     }
 
     public function getEdit($slug)
@@ -66,7 +65,7 @@ class Article extends \App\Models\BaseModel
            ->from('categories', 'c')
            ->innerJoin('c', 'article_category', 'ac', 'c.id = ac.category_id')
            ->innerJoin('ac', 'articles', 'a', 'ac.article_id = a.id')
-           ->where('a.id = :id AND deleted = 0')
+           ->where('a.id = :id AND a.deleted = 0')
            ->setParameter(':id', $article['id'])
            ->execute()
            ->fetchAll();
@@ -85,19 +84,19 @@ class Article extends \App\Models\BaseModel
 
     }
 
-    public function edit($data, $slug, $publish = 1)
+    public function edit($data, $slug)
     {
         $edit = [
             'title'         => $data['title'],
             'title_slug'    => preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($data['title'])),
             'content'       => $data['content'],
+            'is_publish'    => $data['is_publish'],
         ];
 
-        if ($publish == 0) {
-            $merge['is_publish'] = 0;
+        if ($edit['is_publish'] == 1) {
+            $merge['publish_at'] = date('Y-m-d H:i:s');
             $edit = array_merge($edit, $merge);
         }
-
 
         $find = $this->find('title_slug', $slug)->withoutDelete()->fetch();
 
@@ -133,7 +132,7 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 
@@ -161,7 +160,7 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 
@@ -197,7 +196,7 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 
@@ -237,11 +236,11 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 
-    public function search($search, , int $page, int $limit)
+    public function search($search, int $page, int $limit)
     {
         $qbArticle = $this->getBuilder();
 
@@ -274,7 +273,7 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 
@@ -312,7 +311,7 @@ class Article extends \App\Models\BaseModel
             }
 
         }
-        
+
         return $article;
     }
 }
